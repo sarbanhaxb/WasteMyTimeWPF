@@ -21,6 +21,7 @@ namespace WasteMyTime
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     /// 
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -32,24 +33,8 @@ namespace WasteMyTime
 
         private void PritnTree()
         {
-            List<City> cities = SQLquery.GetCities("database.db");
-            List<Object> objects = SQLquery.GetObjects("database.db");
-            foreach (var city in cities)
-            {
-                TreeViewItem item = new TreeViewItem();
-                item.Header = city.Title;
-                foreach (var obj in objects) 
-                {
-                    if (obj.Id_city == city.Id)
-                    {
-                        TreeViewItem sub_item = new TreeViewItem();
-                        sub_item.Header = obj.Title;
-                        item.Items.Add(sub_item);
-                    }
-                }
-                TreeWidget.Items.Add(item);
-            }
-
+            var cities = SQLquery.GetCitiesWithObjects("database.db");
+            TreeWidget.ItemsSource = cities;
         }
 
         private void MainWindowExitButton_Click(object sender, RoutedEventArgs e)
@@ -59,7 +44,27 @@ namespace WasteMyTime
 
         private void MainWindowsAddCityButton_Click(object sender, RoutedEventArgs e)
         {
-
+            AddCityWindow addCityWindow = new AddCityWindow();
+            addCityWindow.Owner = this;
+            addCityWindow.ShowDialog();
+            this.PritnTree();
         }
+
+        private void MainWindowDeleteCityButton_Click(object sender, RoutedEventArgs e)
+        {
+            //НЕ РАБОТАЕТ
+            var item = TreeWidget.SelectedItem;
+            Console.WriteLine(item.ToString());
+            Console.Write("asd");
+
+            if (item != null)
+            {
+                //это не работает, если в названии города есть пробел
+                //int id = SQLquery.GetCityId("database.db", item.ToString().Split()[1].Split(':')[1]);
+                //SQLquery.DeleteCity("database.db", id);
+                this.PritnTree();
+            }
+        }
+
     }
 }

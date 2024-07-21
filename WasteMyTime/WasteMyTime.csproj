@@ -110,9 +110,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="City.cs" />
-    <Compile Include="Object.cs" />
+    <Compile Include="AddCityWindow.xaml.cs">
+      <DependentUpon>AddCityWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataClassObjects.cs" />
     <Compile Include="SQLquery.cs" />
+    <Page Include="AddCityWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Images\icons\add.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Images\icons\exit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -6,7 +6,7 @@
         xmlns:svg1="clr-namespace:SVGImage.SVG;assembly=DotNetProjects.SVGImage"
         xmlns:local="clr-namespace:WasteMyTime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="700">
+        Title="Эколог-Отходы" Height="600" Width="700">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -43,14 +43,31 @@
         <Image Source="Images/fon.jpg" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Stretch="Fill" IsEnabled="False"/>
 
         <UniformGrid Grid.Row="2" Rows="1" Columns="3">
-            <Button x:Name="MainWindowsAddCityButton" VerticalAlignment="Center" Height="50" Width="50" Click="MainWindowsAddCityButton_Click">
+            <Button x:Name="MainWindowsAddCityButton" VerticalAlignment="Center" Height="50" Width="50" Click="MainWindowsAddCityButton_Click" Cursor="Hand">
+                <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                    <Canvas Name="svg13" Width="24" Height="24">
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="0" Y="0"/>
+                        </Canvas.RenderTransform>
+                        <Canvas.Resources/>
+                        <Canvas Name="Complete">
+                            <Canvas Name="addsquare">
+                                <Canvas Name="g9">
+                                    <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="2" Canvas.Top="2" Width="20" Height="20" RadiusX="2" RadiusY="2" Name="_Rectangle" StrokeThickness="2" Stroke="#FF000000" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                    <Line xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" X1="15.5" Y1="12" X2="8.5" Y2="12" Name="line5" StrokeThickness="2" Stroke="#FF000000" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                    <Line xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" X1="12" Y1="15.5" X2="12" Y2="8.5" Name="line7" StrokeThickness="2" Stroke="#FF000000" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                </Canvas>
+                            </Canvas>
+                        </Canvas>
+                    </Canvas>
+                </Viewbox>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="15"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="MainWindowDeleteCityButton" VerticalAlignment="Center" Height="50" Width="50" Grid.Row="2" Margin="0,4,0,5">
+            <Button x:Name="MainWindowDeleteCityButton" VerticalAlignment="Center" Height="50" Width="50" Grid.Row="2" Margin="0,4,0,5" Click="MainWindowDeleteCityButton_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="15"/>
@@ -64,9 +81,8 @@
                             <TranslateTransform X="0" Y="0"/>
                         </Canvas.RenderTransform>
                         <Canvas.Resources/>
-                        <!--Unknown tag: sodipodi:namedview-->
                         <Canvas Name="ExitSVG">
-                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="Vector" StrokeThickness="2" Stroke="#FF000000" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="-0.001">
+                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="Vector1" StrokeThickness="2" Stroke="#FF000000" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="-0.001">
                                 <Path.Data>
                                     <PathGeometry Figures="M12 15L15 12M15 12L12 9M15 12H4M4 7.24802V7.2002C4 6.08009 4 5.51962 4.21799 5.0918C4.40973 4.71547 4.71547 4.40973 5.0918 4.21799C5.51962 4 6.08009 4 7.2002 4H16.8002C17.9203 4 18.4796 4 18.9074 4.21799C19.2837 4.40973 19.5905 4.71547 19.7822 5.0918C20 5.5192 20 6.07899 20 7.19691V16.8036C20 17.9215 20 18.4805 19.7822 18.9079C19.5905 19.2842 19.2837 19.5905 18.9074 19.7822C18.48 20 17.921 20 16.8031 20H7.19691C6.07899 20 5.5192 20 5.0918 19.7822C4.71547 19.5905 4.40973 19.2839 4.21799 18.9076C4 18.4798 4 17.9201 4 16.8V16.75" FillRule="NonZero"/>
                                 </Path.Data>
@@ -82,6 +98,16 @@
             </Button>
         </UniformGrid>
         <TreeView x:Name="TreeWidget" Grid.Row="3" Grid.Column="0">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Objects}">
+                    <TextBlock Text="{Binding Title}" />
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}" />
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
     </Grid>
 </Window>
