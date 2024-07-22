@@ -1,12 +1,11 @@
-﻿<Window x:Class="WasteMyTime.AddCityWindow"
+﻿<Window x:Class="WasteMyTime.AddObjectWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WasteMyTime"
         mc:Ignorable="d"
-        Title="Новый город" Height="150" Width="380"
-        WindowStartupLocation="CenterOwner" KeyDown="Window_KeyDown">
+        Title="AddObjectWindow" Height="150" Width="380">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
@@ -20,8 +19,8 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Column="1" Content="Название города" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center"/>
-        <TextBox x:Name="CityTitleTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center"  Height="30" VerticalContentAlignment="Center">
+        <Label Grid.Column="1" Content="Название объекта" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center"/>
+        <TextBox x:Name="ObjTitleTextBox" Grid.Column="2" HorizontalAlignment="Stretch" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center"  Height="30" VerticalContentAlignment="Center">
             <TextBox.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -30,14 +29,14 @@
         </TextBox>
 
         <UniformGrid Grid.Row="3" Grid.Column="2">
-            <Button x:Name="AddCityButton" Grid.Column="2" Content="Добавить" HorizontalAlignment="Left"  Grid.Row="3" VerticalAlignment="Bottom" Width="90" Click="AddCityButton_Click">
+            <Button x:Name="AddObjButton" Grid.Column="2" Content="Добавить" HorizontalAlignment="Left"  Grid.Row="3" VerticalAlignment="Bottom" Width="90" Click="AddObjButton_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="CancelButton" Grid.Column="2" Content="Отмена" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Bottom" Width="90" Click="CancelButton_Click">
+            <Button x:Name="CancelObjButton" Grid.Column="2" Content="Отмена" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Bottom" Width="90">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>

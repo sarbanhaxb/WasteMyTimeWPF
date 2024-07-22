@@ -27,6 +27,7 @@ namespace WasteMyTime
         public MainWindow()
         {
             InitializeComponent();
+            SQLquery.ForeignKeysOn("database.db");
             SQLquery.CreateDatabase("database.db");
             this.PritnTree();
         }
@@ -52,19 +53,80 @@ namespace WasteMyTime
 
         private void MainWindowDeleteCityButton_Click(object sender, RoutedEventArgs e)
         {
-            //НЕ РАБОТАЕТ
-            var item = TreeWidget.SelectedItem;
-            Console.WriteLine(item.ToString());
-            Console.Write("asd");
-
-            if (item != null)
+            if (TreeWidget.SelectedItem != null)
             {
-                //это не работает, если в названии города есть пробел
-                //int id = SQLquery.GetCityId("database.db", item.ToString().Split()[1].Split(':')[1]);
-                //SQLquery.DeleteCity("database.db", id);
-                this.PritnTree();
+                if (TreeWidget.SelectedItem is City)
+                {
+                    var item = (City)TreeWidget.SelectedItem;
+                    SQLquery.DeleteCity("database.db", item.Id);
+                }
+                else if (TreeWidget.SelectedItem is ObjectItem)
+                {
+                    var item = (ObjectItem)TreeWidget.SelectedItem;
+                    SQLquery.DeleteObject("database.db", item.Id);
+                }
+            }
+            this.PritnTree();
+        }
+
+        private void TreeWidget_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Получаем исходный элемент, на который нажали правой кнопкой мыши
+            var clickedItem = FindAncestor<TreeViewItem>((DependencyObject)e.OriginalSource);
+
+            if (clickedItem != null)
+            {
+                // Устанавливаем выделение для выбранного элемента
+                clickedItem.IsSelected = true;
+
+                // Создаем контекстное меню
+                ContextMenu contextMenu = new ContextMenu();
+
+                // Добавляем элементы в контекстное меню
+                MenuItem action1 = new MenuItem { Header = "Добавить объект" };
+                action1.Click += MenuItemAddObjectClick;
+
+                MenuItem action2 = new MenuItem { Header = "Удалить объект" };
+                action2.Click += MenuItemDeleteItemClick;
+
+                contextMenu.Items.Add(action1);
+                contextMenu.Items.Add(action2);
+
+                // Устанавливаем контекстное меню и открываем его
+                contextMenu.PlacementTarget = clickedItem;
+                contextMenu.IsOpen = true;
+
+                e.Handled = true; // Отменяем стандартное поведение
             }
         }
 
+        private void MenuItemAddObjectClick(object sender, RoutedEventArgs e)
+        {
+            if (TreeWidget.SelectedItem is City)
+            {
+                int id_city = ((City)TreeWidget.SelectedItem).Id;
+                SQLquery.AddObject("database.db", id_city, "Новый объект");
+            }
+            this.PritnTree();
+        }
+
+        private void MenuItemDeleteItemClick(object sender, RoutedEventArgs e)
+        {
+            // Логика для действия 2
+        }
+
+        // Вспомогательный метод для поиска предков
+        private T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            while (current != null)
+            {
+                if (current is T ancestor)
+                {
+                    return ancestor;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            return null;
+        }
     }
 }

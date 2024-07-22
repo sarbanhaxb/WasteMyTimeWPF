@@ -35,5 +35,18 @@ namespace WasteMyTime
             SQLquery.AddCity("database.db", CityTitleTextBox.Text);
             this.Close();
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SQLquery.AddCity("database.db", CityTitleTextBox.Text);
+                this.Close();
+            }
+            if (e.Key == Key.Escape) 
+            {
+                this.Close();
+            }
+        }
     }
 }

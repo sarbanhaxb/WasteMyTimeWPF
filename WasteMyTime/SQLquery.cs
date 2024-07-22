@@ -13,9 +13,9 @@ namespace WasteMyTime
 {
     public static class SQLquery
     {
-        public static void CreateDatabase(string Dataname)
+        public static void ForeignKeysOn(string Dataname)
         {
-            using (var connection = new SQLiteConnection($"Data Source={Dataname}")) 
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
             {
                 connection.Open();
                 SQLiteCommand command = connection.CreateCommand();
@@ -23,6 +23,15 @@ namespace WasteMyTime
 
                 command.CommandText = "PRAGMA foreign_keys = ON;";
                 command.ExecuteNonQuery();
+            }
+        }
+        public static void CreateDatabase(string Dataname)
+        {
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}")) 
+            {
+                connection.Open();
+                SQLiteCommand command = connection.CreateCommand();
+                command.Connection = connection;
 
                 command.CommandText = "CREATE TABLE IF NOT EXISTS cities " +
                     "(id INTEGER PRIMARY KEY, " +
@@ -121,6 +130,18 @@ namespace WasteMyTime
             }
         }
 
+        public static void AddObject(string Dataname, int id_city, string title)
+        {
+            string sqlExpression = $"INSERT INTO objects (id_city, title) VALUES ({id_city}, '{title}')";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                command.ExecuteNonQuery();
+            }
+        }
+
+
         //не работает каскадное удаление отсуюда. В БД работает.
         public static void DeleteCity(string Dataname, int cityId)
         {
@@ -141,7 +162,25 @@ namespace WasteMyTime
             }
         }
 
-        public static int GetCityId(string Dataname, string title)
+        public static void DeleteObject(string Dataname, int objectId)
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+                {
+                    connection.Open();
+                    var command = new SQLiteCommand("DELETE FROM objects WHERE id = @objectId", connection);
+                    command.Parameters.AddWithValue("@objectId", objectId);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                Console.WriteLine($"Ошибка при удалении объекта: {ex.Message}");
+            }
+        }
+
+            public static int GetCityId(string Dataname, string title)
         {
             int cityId;
 
