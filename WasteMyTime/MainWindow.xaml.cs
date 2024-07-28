@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SharpVectors;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
 namespace WasteMyTime
 {
@@ -105,14 +106,24 @@ namespace WasteMyTime
             if (TreeWidget.SelectedItem is City)
             {
                 int id_city = ((City)TreeWidget.SelectedItem).Id;
-                SQLquery.AddObject("database.db", id_city, "Новый объект");
+                var addObjectWindow = new AddObjectWindow(id_city);
+                addObjectWindow.ShowDialog();
+                this.PritnTree();
             }
-            this.PritnTree();
         }
 
         private void MenuItemDeleteItemClick(object sender, RoutedEventArgs e)
         {
-            // Логика для действия 2
+            if (TreeWidget.SelectedItem is ObjectItem item)
+            {
+                SQLquery.DeleteObject("database.db", item.Id);
+                this.PritnTree();
+            }
+            else if (TreeWidget.SelectedItem is City city)
+            {
+                SQLquery.DeleteCity("database.db", city.Id);
+                this.PritnTree();
+            }
         }
 
         // Вспомогательный метод для поиска предков
@@ -127,6 +138,34 @@ namespace WasteMyTime
                 current = VisualTreeHelper.GetParent(current);
             }
             return null;
+        }
+
+        private void TESTBUTTON_Click(object sender, RoutedEventArgs e)
+        {
+            var cities = SQLquery.GetCities("database.db");
+            foreach (var c in cities)
+            {
+                Console.WriteLine($"ГОРОД: {c.Title}, {c.Id}");
+
+                foreach(ObjectItem c2 in SQLquery.GetObjects("database.db", c.Id))
+                {
+                    Console.WriteLine($"ОБЪЕКТ ГОРОДА: {c2.IdCity} {c2.Title}");
+                }
+            }
+        }
+
+        private void TreeWidget_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (TreeWidget.SelectedItem is City city)
+            {
+                TextBoxCityName.Text = city.Title;
+                TextBoxObjectTitle.Text = "";
+            }
+            else if (TreeWidget.SelectedItem is ObjectItem item)
+            {
+                TextBoxCityName.Text= SQLquery.GetCityTitle("database.db", item.IdCity);
+                TextBoxObjectTitle.Text = item.Title;
+            }
         }
     }
 }

@@ -115,17 +115,79 @@
                 </Button.Resources>
             </Button>
         </UniformGrid>
-        <TreeView x:Name="TreeWidget" Grid.Row="3" Grid.Column="0" PreviewMouseRightButtonDown="TreeWidget_PreviewMouseRightButtonDown">
+        <TreeView x:Name="TreeWidget" 
+                  Grid.Row="3" 
+                  Grid.Column="0" 
+                  PreviewMouseRightButtonDown="TreeWidget_PreviewMouseRightButtonDown"
+                  Margin="5"
+                  Padding="5" SelectedItemChanged="TreeWidget_SelectedItemChanged"
+                  >
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Objects}">
-                    <TextBlock Text="{Binding Title}" />
+                    <TextBlock Text="{Binding Title}"/>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Title}" />
+                            <TextBlock Text="{Binding Title}"/>
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
+        <Grid Grid.Column="1" Grid.Row="3" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" 
+                   Content="Наименование города" 
+                   HorizontalAlignment="Stretch" 
+                   Grid.Row="0" 
+                   VerticalAlignment="Stretch" 
+                   HorizontalContentAlignment="Left"
+                   VerticalContentAlignment="Center"
+                   FontSize="14"
+                   />
+            <TextBox x:Name="TextBoxCityName"
+                     Grid.Column="2" 
+                     HorizontalAlignment="Stretch" 
+                     Grid.Row="0" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center" 
+                     VerticalContentAlignment="Center"
+                     FontSize="14"
+                     />
+            <Label Grid.Column="1" 
+                   Content="Название объекта" 
+                   HorizontalAlignment="Stretch" 
+                   Grid.Row="1" 
+                   VerticalAlignment="Stretch"
+                   HorizontalContentAlignment="Left"
+                   VerticalContentAlignment="Center"
+                   FontSize="14"
+                   />
+            <TextBox x:Name="TextBoxObjectTitle" 
+                     Grid.Column="2" 
+                     HorizontalAlignment="Stretch" 
+                     Grid.Row="1" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center"
+                     FontSize="14"
+                     />
+        </Grid>
     </Grid>
 </Window>

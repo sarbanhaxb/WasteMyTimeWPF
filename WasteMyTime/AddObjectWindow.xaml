@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WasteMyTime"
         mc:Ignorable="d"
-        Title="AddObjectWindow" Height="150" Width="380">
+        Title="AddObjectWindow" Height="150" Width="380"
+        WindowStartupLocation="CenterScreen" 
+        KeyDown="WindowObj_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
@@ -36,7 +38,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="CancelObjButton" Grid.Column="2" Content="Отмена" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Bottom" Width="90">
+            <Button x:Name="CancelObjButton" Grid.Column="2" Content="Отмена" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Bottom" Width="90" Click="CancelObjButton_Click">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5"/>

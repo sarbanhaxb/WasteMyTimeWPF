@@ -124,9 +124,15 @@ namespace WasteMyTime
             using (var connection = new SQLiteConnection($"Data Source={Dataname}")) 
             {
                 connection.Open();
-
-                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
-                command.ExecuteNonQuery();
+                try
+                {
+                    SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                    command.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex) 
+                {
+                    MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
 
@@ -135,19 +141,24 @@ namespace WasteMyTime
             string sqlExpression = $"INSERT INTO objects (id_city, title) VALUES ({id_city}, '{title}')";
             using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
             {
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
-                command.ExecuteNonQuery();
+                try
+                {
+                    connection.Open();
+                    SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                    command.ExecuteNonQuery();
+                }
+                catch ( SQLiteException ex)
+                {
+                    MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
 
-
-        //не работает каскадное удаление отсуюда. В БД работает.
         public static void DeleteCity(string Dataname, int cityId)
         {
             try
             {
-                using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+                using (var connection = new SQLiteConnection($"Data Source={Dataname}; foreign_keys = ON;"))
                 {
                     connection.Open();
                     var command = new SQLiteCommand("DELETE FROM cities WHERE id = @cityId", connection);
@@ -157,8 +168,8 @@ namespace WasteMyTime
             }
             catch (SQLiteException ex)
             {
-                // Логирование или обработка ошибки
                 Console.WriteLine($"Ошибка при удалении города: {ex.Message}");
+                MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             }
         }
 
@@ -177,10 +188,11 @@ namespace WasteMyTime
             catch (SQLiteException ex)
             {
                 Console.WriteLine($"Ошибка при удалении объекта: {ex.Message}");
+                MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             }
         }
 
-            public static int GetCityId(string Dataname, string title)
+        public static int GetCityId(string Dataname, string title)
         {
             int cityId;
 
@@ -192,7 +204,19 @@ namespace WasteMyTime
                 cityId = command.ExecuteReader().GetInt32(0);
             }
 
-                return cityId;
+            return cityId;
+        }
+
+        public static string GetCityTitle(string Dataname, int id_city)
+        {
+            string title = "";
+            string sqlExpression = $"SELECT title FROM cities WHERE id={id_city}";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                return Convert.ToString(command.ExecuteScalar());
+            }
         }
 
 

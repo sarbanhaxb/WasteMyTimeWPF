@@ -14,21 +14,38 @@ using System.Windows.Shapes;
 
 namespace WasteMyTime
 {
-    /// <summary>
-    /// Логика взаимодействия для AddObjectWindow.xaml
-    /// </summary>
     public partial class AddObjectWindow : Window
     {
-        public AddObjectWindow()
+        private int _idCity;
+        public AddObjectWindow(int idCity)
         {
             InitializeComponent();
+            _idCity = idCity;
+            ObjTitleTextBox.Focus();
         }
 
         private void AddObjButton_Click(object sender, RoutedEventArgs e)
         {
-            //int id = ((City)TreeWidget.SelectedItem).Id;
-            //SQLquery.AddObject("database.db", CityTitleTextBox.Text);
-            //this.Close();
+            SQLquery.AddObject("database.db", _idCity, ObjTitleTextBox.Text);
+            this.Close();
+        }
+
+        private void CancelObjButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void WindowObj_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SQLquery.AddObject("database.db", _idCity, ObjTitleTextBox.Text);
+                this.Close();
+            }
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
         }
     }
 }
