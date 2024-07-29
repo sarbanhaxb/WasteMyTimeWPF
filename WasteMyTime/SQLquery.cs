@@ -263,5 +263,40 @@ namespace WasteMyTime
             }
             return cities;
         }
+
+        public static void UpdateCityData(string Dataname, int id, string title) 
+        {
+            string sqlExpression = $"UPDATE cities SET title='{title}' WHERE id={id}";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (System.Data.SQLite.SQLiteException ex)
+                {
+                    MessageBox.Show($"Ошибка изменения наименования: {ex.Message}", "Ошибка базы данных", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        public static void UpdateObjectData(string Dataname, int id, string title)
+        {
+            string sqlExpression = $"UPDATE objects SET title='{title}' WHERE id={id}";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (System.Data.SQLite.SQLiteException ex)
+                {
+                    MessageBox.Show($"Ошибка изменения наименования: {ex.Message}", "Ошибка базы данных", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
     }
 }

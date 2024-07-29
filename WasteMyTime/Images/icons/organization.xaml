@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This file is NOT compatible with Silverlight-->
+<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+    <Canvas Name="XMLID_176_" Width="24" Height="24">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <!--Unknown tag: sodipodi:namedview-->
+        <Canvas Name="organization">
+            <Canvas Name="g4">
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" Fill="#FF000000" Height="21" Stretch="Fill" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="3.75" Canvas.Top="2.5">
+                    <Path.Data>
+                        <PathGeometry Figures="M20 24H4V5H2V0h20v5h-2V24z M6 22h12V5H6V22z M4 3h16V2H4V3z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+            <Canvas Name="g8">
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="9" Canvas.Top="9" Width="2" Height="3" Name="rect6" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
+            <Canvas Name="g12">
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="9" Width="2" Height="3" Name="rect10" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
+            <Canvas Name="g16">
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="9" Canvas.Top="15" Width="2" Height="3" Name="rect14" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
+            <Canvas Name="g20">
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="11" Canvas.Top="19" Width="3" Height="3" Name="rect18" Fill="#FF000000" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </Canvas>
+            <Canvas Name="g24">
+                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="15" Width="2" Height="3" Name="rect22" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
+        </Canvas>
+    </Canvas>
+</Viewbox>

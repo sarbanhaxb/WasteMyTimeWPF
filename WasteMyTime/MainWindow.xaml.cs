@@ -140,31 +140,38 @@ namespace WasteMyTime
             return null;
         }
 
-        private void TESTBUTTON_Click(object sender, RoutedEventArgs e)
-        {
-            var cities = SQLquery.GetCities("database.db");
-            foreach (var c in cities)
-            {
-                Console.WriteLine($"ГОРОД: {c.Title}, {c.Id}");
-
-                foreach(ObjectItem c2 in SQLquery.GetObjects("database.db", c.Id))
-                {
-                    Console.WriteLine($"ОБЪЕКТ ГОРОДА: {c2.IdCity} {c2.Title}");
-                }
-            }
-        }
-
         private void TreeWidget_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (TreeWidget.SelectedItem is City city)
             {
                 TextBoxCityName.Text = city.Title;
                 TextBoxObjectTitle.Text = "";
+                TextBoxObjectTitle.IsEnabled = false;
+                TextBoxCityName.IsEnabled = true;
             }
             else if (TreeWidget.SelectedItem is ObjectItem item)
             {
-                TextBoxCityName.Text= SQLquery.GetCityTitle("database.db", item.IdCity);
+                TextBoxCityName.Text = SQLquery.GetCityTitle("database.db", item.IdCity);
                 TextBoxObjectTitle.Text = item.Title;
+                TextBoxCityName.IsEnabled = false;
+                TextBoxObjectTitle.IsEnabled = true;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (TreeWidget.SelectedItem != null)
+            {
+                if (TreeWidget.SelectedValue is City city)
+                {
+                    SQLquery.UpdateCityData("database.db", city.Id, TextBoxCityName.Text);
+                    this.PritnTree();
+                }
+                else if (TreeWidget.SelectedItem is ObjectItem obj)
+                {
+                    SQLquery.UpdateObjectData("database.db", obj.Id, TextBoxObjectTitle.Text);
+                    this.PritnTree();
+                }
             }
         }
     }

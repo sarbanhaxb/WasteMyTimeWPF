@@ -118,6 +118,9 @@
     </Compile>
     <Compile Include="DataClassObjects.cs" />
     <Compile Include="SQLquery.cs" />
+    <Compile Include="WindowBDO.xaml.cs">
+      <DependentUpon>WindowBDO.xaml</DependentUpon>
+    </Compile>
     <Page Include="AddCityWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +128,14 @@
     <Page Include="AddObjectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Images\icons\cancel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Images\icons\city.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Images\icons\close.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -135,6 +146,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Images\icons\exit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Images\icons\organization.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Images\icons\save.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -150,6 +169,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WindowBDO.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

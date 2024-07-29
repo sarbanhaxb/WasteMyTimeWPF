@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<Grid xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Grid.Resources>
+        <ResourceDictionary/>
+    </Grid.Resources>
+    <Viewbox Stretch="Uniform" Name="_____1">
+        <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
+            <Canvas.Clip>
+                <RectangleGeometry Rect="0.0,0.0,32.0,32.0"/>
+            </Canvas.Clip>
+            <Path Fill="#ff000000">
+                <Path.Data>
+                    <PathGeometry Figures="M 27.5556 0 H 4.44444 A 4.44858 4.44858 0 0 0 0 4.44444 V 27.5556 A 4.44858 4.44858 0 0 0 4.44444 32 H 27.5556 A 4.44858 4.44858 0 0 0 32 27.5556 V 4.44444 A 4.44858 4.44858 0 0 0 27.5556 0 Z m 2.66667 27.5556 a 2.6696 2.6696 0 0 1 -2.66667 2.66667 H 4.44444 A 2.6696 2.6696 0 0 1 1.77778 27.5556 V 4.44444 A 2.6696 2.6696 0 0 1 4.44444 1.77778 H 27.5556 a 2.6696 2.6696 0 0 1 2.66667 2.66667 z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+            <Path Fill="#ff000000">
+                <Path.Data>
+                    <PathGeometry Figures="m 22.8507 9.14929 a 2.67204 2.67204 0 0 0 -3.77084 0 L 16 12.2292 L 12.92 9.14916 A 2.6664 2.6664 0 0 0 9.14929 12.92 L 12.2293 16 L 9.14929 19.08 A 2.6664 2.6664 0 0 0 12.92 22.8507 l 3.08 -3.08 l 3.08 3.08 A 2.6664 2.6664 0 0 0 22.8507 19.08 L 19.7708 16 l 3.08 -3.08 a 2.66889 2.66889 0 0 0 -0.000133 -3.77071 z m -1.25698 2.51391 l -3.70831 3.70831 a 0.888578 0.888578 0 0 0 0 1.25698 l 3.70831 3.70831 A 0.888889 0.888889 0 1 1 20.3368 21.5937 l -3.70831 -3.70831 a 0.888667 0.888667 0 0 0 -1.25698 0 L 11.6632 21.5937 A 0.888889 0.888889 0 1 1 10.4063 20.3368 l 3.70831 -3.70831 a 0.888578 0.888578 0 0 0 0 -1.25698 L 10.4063 11.6632 A 0.888889 0.888889 0 1 1 11.6632 10.4063 l 3.70831 3.70831 a 0.888578 0.888578 0 0 0 1.25698 0 l 3.70831 -3.70831 a 0.888889 0.888889 0 1 1 1.25693 1.25693 z" FillRule="Nonzero"/>
+                </Path.Data>
+            </Path>
+        </Canvas>
+    </Viewbox>
+</Grid>

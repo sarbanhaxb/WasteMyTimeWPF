@@ -6,7 +6,9 @@
         xmlns:svg1="clr-namespace:SVGImage.SVG;assembly=DotNetProjects.SVGImage"
         xmlns:local="clr-namespace:WasteMyTime"
         mc:Ignorable="d"
-        Title="Эколог-Отходы" Height="600" Width="700">
+        Title="Эколог-Отходы" 
+        Height="700" 
+        Width="800">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -116,12 +118,15 @@
             </Button>
         </UniformGrid>
         <TreeView x:Name="TreeWidget" 
-                  Grid.Row="3" 
-                  Grid.Column="0" 
-                  PreviewMouseRightButtonDown="TreeWidget_PreviewMouseRightButtonDown"
-                  Margin="5"
-                  Padding="5" SelectedItemChanged="TreeWidget_SelectedItemChanged"
-                  >
+          Grid.Row="3" 
+          Grid.Column="0" 
+          PreviewMouseRightButtonDown="TreeWidget_PreviewMouseRightButtonDown"
+          Margin="5"
+          Padding="5" 
+          SelectedItemChanged="TreeWidget_SelectedItemChanged"
+                  BorderThickness="1">
+            
+
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="True"/>
@@ -129,10 +134,65 @@
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Objects}">
-                    <TextBlock Text="{Binding Title}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <!--This file is NOT compatible with Silverlight-->
+
+                        <!--This file is NOT compatible with Silverlight-->
+                        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                            <Canvas Name="svg4" Width="24" Height="24">
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </Canvas.RenderTransform>
+                                <Canvas.Resources/>
+                                <!--Unknown tag: sodipodi:namedview-->
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" StrokeThickness="2" Stroke="#FF000000" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Height="17" Canvas.Left="3.5" Stretch="Fill" Canvas.Top="3.5" Width="17" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Path.Data>
+                                        <PathGeometry Figures="M7 9H7.01M7 13H7.01M7 17H7.01M15 7H15.01M15 11H15.01M15 15H15.01M18 14H18.01M18 18H18.01M9 5H4C3.44772 5 3 5.44772 3 6V20C3 20.5523 3.44772 21 4 21H9M12 4.6V19.4C12 19.9601 12 20.2401 12.109 20.454C12.2049 20.6422 12.3578 20.7951 12.546 20.891C12.7599 21 13.0399 21 13.6 21H19.4C19.9601 21 20.2401 21 20.454 20.891C20.6422 20.7951 20.7951 20.6422 20.891 20.454C21 20.2401 21 19.9601 21 19.4V11.5C21 11.0341 21 10.8011 20.9239 10.6173C20.8224 10.3723 20.6277 10.1776 20.3827 10.0761C20.1989 10 19.9659 10 19.5 10C19.0341 10 18.8011 10 18.6173 9.92388C18.3723 9.82239 18.1776 9.62771 18.0761 9.38268C18 9.19891 18 8.96594 18 8.5V4.6C18 4.03995 18 3.75992 17.891 3.54601C17.7951 3.35785 17.6422 3.20487 17.454 3.10899C17.2401 3 16.9601 3 16.4 3H13.6C13.0399 3 12.7599 3 12.546 3.10899C12.3578 3.20487 12.2049 3.35785 12.109 3.54601C12 3.75992 12 4.03995 12 4.6Z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Viewbox>
+
+                        <TextBlock Text="{Binding Title}"/>
+                    </StackPanel>
                     <HierarchicalDataTemplate.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Title}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Fill">
+                                    <Canvas Name="XMLID_176_" Width="24" Height="24">
+                                        <Canvas.RenderTransform>
+                                            <TranslateTransform X="0" Y="0"/>
+                                        </Canvas.RenderTransform>
+                                        <Canvas.Resources/>
+                                        <!--Unknown tag: sodipodi:namedview-->
+                                        <Canvas Name="organization">
+                                            <Canvas Name="g4">
+                                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" Fill="#FF000000" Height="21" Stretch="Fill" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="3.75" Canvas.Top="2.5">
+                                                    <Path.Data>
+                                                        <PathGeometry Figures="M20 24H4V5H2V0h20v5h-2V24z M6 22h12V5H6V22z M4 3h16V2H4V3z" FillRule="NonZero"/>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+                                            <Canvas Name="g8">
+                                                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="9" Canvas.Top="9" Width="2" Height="3" Name="rect6" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                            </Canvas>
+                                            <Canvas Name="g12">
+                                                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="9" Width="2" Height="3" Name="rect10" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                            </Canvas>
+                                            <Canvas Name="g16">
+                                                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="9" Canvas.Top="15" Width="2" Height="3" Name="rect14" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                            </Canvas>
+                                            <Canvas Name="g20">
+                                                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="11" Canvas.Top="19" Width="3" Height="3" Name="rect18" Fill="#FF000000" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                            </Canvas>
+                                            <Canvas Name="g24">
+                                                <Rectangle xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Canvas.Left="14" Canvas.Top="15" Width="2" Height="3" Name="rect22" Fill="#FF000000" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                            </Canvas>
+                                        </Canvas>
+                                    </Canvas>
+                                </Viewbox>
+                                <TextBlock Text="{Binding Title}"/>
+                            </StackPanel>
                         </DataTemplate>
                     </HierarchicalDataTemplate.ItemTemplate>
                 </HierarchicalDataTemplate>
@@ -153,6 +213,7 @@
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" Grid.RowSpan="6" Grid.ColumnSpan="4" CornerRadius="5"/>
             <Label Grid.Column="1" 
                    Content="Наименование города" 
                    HorizontalAlignment="Stretch" 
@@ -188,6 +249,55 @@
                      VerticalAlignment="Center"
                      FontSize="14"
                      />
+            <Button Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Margin="40 0" Cursor="Hand" Click="Button_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+                <Grid xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                    <Grid.Resources>
+                        <ResourceDictionary/>
+                    </Grid.Resources>
+                    <Viewbox Stretch="Uniform" x:Name="_2">
+                        <Canvas UseLayoutRounding="False" Width="16.0" Height="16.0">
+                            <Canvas.Clip>
+                                <RectangleGeometry Rect="0.0,0.0,16.0,16.0"/>
+                            </Canvas.Clip>
+                            <Path Fill="#ff000000">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 13 0 H 3 A 3 3 0 0 0 0 3 V 13 A 3 3 0 0 0 3 16 H 13 a 3 3 0 0 0 3 -3 V 3 A 3 3 0 0 0 13 0 Z m -3 1 v 1.5 a 0.5 0.5 0 1 0 1 0 V 1 H 11.5 v 3.5 h -7 v -3.5 z m 5 12 a 2 2 0 0 1 -2 2 H 3 a 2 2 0 0 1 -2 -2 V 3 A 2 2 0 0 1 3 1 H 3.5 V 5 A 0.5 0.5 0 0 0 4 5.5 h 8 A 0.5 0.5 0 0 0 12.5 5 V 1 H 13 a 2 2 0 0 1 2 2 z M 12 7 h -8 A 0.5 0.5 0 0 0 3.5 7.5 V 13.5 a 0.5 0.5 0 0 0 0.5 0.500001 h 8 A 0.5 0.5 0 0 0 12.5 13.5 V 7.5 A 0.5 0.5 0 0 0 12 7 Z M 11.5 13 h -7 V 8 h 7 z m -5.5 -3 h 4 a 0.500001 0.500001 0 0 0 0 -1 H 6 a 0.500001 0.500001 0 0 0 0 1 z m 0 2 h 4 a 0.5 0.5 0 0 0 0 -0.999999 H 6 a 0.5 0.5 0 0 0 0 0.999999 z" FillRule="Nonzero"/>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Viewbox>
+                </Grid>
+            </Button>
+
+            <Button Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Cursor="Hand">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+                <Viewbox Stretch="Uniform" Name="_1">
+                    <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
+                        <Canvas.Clip>
+                            <RectangleGeometry Rect="0.0,0.0,32.0,32.0"/>
+                        </Canvas.Clip>
+                        <Path Fill="#ff000000">
+                            <Path.Data>
+                                <PathGeometry Figures="M 27.5556 0 H 4.44444 A 4.44858 4.44858 0 0 0 0 4.44444 V 27.5556 A 4.44858 4.44858 0 0 0 4.44444 32 H 27.5556 A 4.44858 4.44858 0 0 0 32 27.5556 V 4.44444 A 4.44858 4.44858 0 0 0 27.5556 0 Z m 2.66667 27.5556 a 2.6696 2.6696 0 0 1 -2.66667 2.66667 H 4.44444 A 2.6696 2.6696 0 0 1 1.77778 27.5556 V 4.44444 A 2.6696 2.6696 0 0 1 4.44444 1.77778 H 27.5556 a 2.6696 2.6696 0 0 1 2.66667 2.66667 z" FillRule="Nonzero"/>
+                            </Path.Data>
+                        </Path>
+                        <Path Fill="#ff000000">
+                            <Path.Data>
+                                <PathGeometry Figures="m 22.8507 9.14929 a 2.67204 2.67204 0 0 0 -3.77084 0 L 16 12.2292 L 12.92 9.14916 A 2.6664 2.6664 0 0 0 9.14929 12.92 L 12.2293 16 L 9.14929 19.08 A 2.6664 2.6664 0 0 0 12.92 22.8507 l 3.08 -3.08 l 3.08 3.08 A 2.6664 2.6664 0 0 0 22.8507 19.08 L 19.7708 16 l 3.08 -3.08 a 2.66889 2.66889 0 0 0 -0.000133 -3.77071 z m -1.25698 2.51391 l -3.70831 3.70831 a 0.888578 0.888578 0 0 0 0 1.25698 l 3.70831 3.70831 A 0.888889 0.888889 0 1 1 20.3368 21.5937 l -3.70831 -3.70831 a 0.888667 0.888667 0 0 0 -1.25698 0 L 11.6632 21.5937 A 0.888889 0.888889 0 1 1 10.4063 20.3368 l 3.70831 -3.70831 a 0.888578 0.888578 0 0 0 0 -1.25698 L 10.4063 11.6632 A 0.888889 0.888889 0 1 1 11.6632 10.4063 l 3.70831 3.70831 a 0.888578 0.888578 0 0 0 1.25698 0 l 3.70831 -3.70831 a 0.888889 0.888889 0 1 1 1.25693 1.25693 z" FillRule="Nonzero"/>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Viewbox>
+            </Button>
         </Grid>
     </Grid>
 </Window>
