@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Threading;
+using System.Data.Entity;
 
 namespace WasteMyTime
 {
@@ -27,7 +30,7 @@ namespace WasteMyTime
         }
         public static void CreateDatabase(string Dataname)
         {
-            using (var connection = new SQLiteConnection($"Data Source={Dataname}")) 
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
             {
                 connection.Open();
                 SQLiteCommand command = connection.CreateCommand();
@@ -44,6 +47,53 @@ namespace WasteMyTime
                     "title VARCHAR(100) NOT NULL UNIQUE, " +
                     "FOREIGN KEY (id_city) REFERENCES cities(id) ON DELETE CASCADE)";
                 command.ExecuteNonQuery();
+            }
+        }
+
+        public static BDOItems LoadBDO()
+        {
+            var ItemsSource = new BDOItems();
+            string sqlExpression = $"SELECT * FROM bdo";
+
+            using (var connection = new SQLiteConnection($"Data Source=C:/Users/sarba/Desktop/C++/WasteMyTime/WasteMyTime/BDO.db"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        BDOItem item = new BDOItem();
+                        item.Number = Convert.ToString(reader["num"]);
+                        item.Title = Convert.ToString(reader["title"]);
+                        item.OriginManufacturing = Convert.ToString(reader["originManufacturing"]);
+                        item.OriginProducts= Convert.ToString(reader["originProducts"]);
+                        item.OriginProcess = Convert.ToString(reader["originProcess"]);
+                        item.Compound = Convert.ToString(reader["compound"]);
+                        item.CompoundPercentMin = Convert.ToDouble(reader["compoundPercentMin"]);
+                        item.CompoundPercentMax = Convert.ToDouble(reader["compoundPercentMax"]);
+                        item.CompoundNotice = Convert.ToString(reader["compoundNotice"]);
+                        item.WasteNotice = Convert.ToString(reader["wasteNotice"]);
+                        item.PhysicalState = Convert.ToString(reader["physicalState"]);
+                        item.HazardClass = Convert.ToString(reader["hazardClass"]);
+                        item.AttributionCriteria = Convert.ToString(reader["attributionCriteria"]);
+                        item.Doc = Convert.ToString(reader["docs"]);
+
+                        ItemsSource.Add(item);
+                    }
+                }
+            }
+            return ItemsSource;
+        }
+
+        public static bool CheckExists(string Dataname, string tableName)
+        {
+            string sqlExpression = $"SELECT EXISTS(SELECT 1 FROM sqlite_master WHERE type='table' AND name='{tableName}')";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                return Convert.ToBoolean(command.ExecuteScalar());
             }
         }
 
@@ -70,8 +120,8 @@ namespace WasteMyTime
             return list;
         }
 
-        public static List<Object> GetObjects(string Dataname) 
-        { 
+        public static List<Object> GetObjects(string Dataname)
+        {
             List<Object> list = new List<Object>();
             string sqlExpression = "SELECT * FROM objects";
             using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
@@ -121,7 +171,7 @@ namespace WasteMyTime
         public static void AddCity(string Dataname, string title)
         {
             string sqlExpression = $"INSERT INTO cities (title) VALUES ('{title}')";
-            using (var connection = new SQLiteConnection($"Data Source={Dataname}")) 
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
             {
                 connection.Open();
                 try
@@ -129,7 +179,7 @@ namespace WasteMyTime
                     SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
                     command.ExecuteNonQuery();
                 }
-                catch (SQLiteException ex) 
+                catch (SQLiteException ex)
                 {
                     MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -147,7 +197,7 @@ namespace WasteMyTime
                     SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
                     command.ExecuteNonQuery();
                 }
-                catch ( SQLiteException ex)
+                catch (SQLiteException ex)
                 {
                     MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -230,7 +280,7 @@ namespace WasteMyTime
 
                 var cityCommand = new SQLiteCommand("SELECT id, title FROM cities", connection);
 
-                using (var reader = cityCommand.ExecuteReader()) 
+                using (var reader = cityCommand.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -264,7 +314,7 @@ namespace WasteMyTime
             return cities;
         }
 
-        public static void UpdateCityData(string Dataname, int id, string title) 
+        public static void UpdateCityData(string Dataname, int id, string title)
         {
             string sqlExpression = $"UPDATE cities SET title='{title}' WHERE id={id}";
             using (var connection = new SQLiteConnection($"Data Source={Dataname}"))

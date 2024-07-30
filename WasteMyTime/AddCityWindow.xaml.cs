@@ -32,14 +32,18 @@ namespace WasteMyTime
 
         private void AddCityButton_Click(object sender, RoutedEventArgs e)
         {
-            SQLquery.AddCity("database.db", CityTitleTextBox.Text);
-            this.Close();
+            if (CityTitleTextBox.Text != "")
+            {
+                SQLquery.AddCity("database.db", CityTitleTextBox.Text);
+                this.Close();
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
+                Console.WriteLine(CityTitleTextBox.Text);
                 SQLquery.AddCity("database.db", CityTitleTextBox.Text);
                 this.Close();
             }

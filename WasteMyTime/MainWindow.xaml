@@ -9,11 +9,55 @@
         Title="Эколог-Отходы" 
         Height="700" 
         Width="800">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF909090" Offset="0.0"/>
+            <GradientStop Color="#FFFFFF" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Window.Resources>
-        <ResourceDictionary>
+        <!--<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>-->
+        <Style TargetType="Button">
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                To="0.9" 
+                                Duration="0:0:0.1" />
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                To="0.9" 
+                                Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.PreviewMouseUp">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                To="1.0" 
+                                Duration="0:0:0.1" />
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                To="1.0" 
+                                Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -36,7 +80,7 @@
             </MenuItem>
             <MenuItem Header="Справочник">
                 <MenuItem Header="Просмотр ФККО" />
-                <MenuItem Header="Просмотр БДО" />
+                <MenuItem x:Name="ShowBDOMenu" Header="Просмотр БДО" Click="ShowBDOMenu_Click" />
             </MenuItem>
             <MenuItem Header="Справка">
                 <MenuItem Header="О программе" />
@@ -46,6 +90,8 @@
 
         <UniformGrid Grid.Row="2" Rows="1" Columns="3">
             <Button x:Name="MainWindowsAddCityButton" VerticalAlignment="Center" Height="50" Width="50" Click="MainWindowsAddCityButton_Click" Cursor="Hand">
+                
+                
                 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
                     <Canvas Name="svg13" Width="24" Height="24">
                         <Canvas.RenderTransform>
@@ -93,6 +139,11 @@
                         <Setter Property="CornerRadius" Value="15"/>
                     </Style>
                 </Button.Resources>
+
+                <Button.RenderTransformOrigin>0.5, 0.5</Button.RenderTransformOrigin>
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                </Button.RenderTransform>
             </Button>
             <Button x:Name="MainWindowExitButton" VerticalAlignment="Center" Height="50" Width="50" Cursor="Hand" Click="MainWindowExitButton_Click">
                 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
@@ -110,6 +161,11 @@
                         </Canvas>
                     </Canvas>
                 </Viewbox>
+
+                <Button.RenderTransformOrigin>0.5, 0.5</Button.RenderTransformOrigin>
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                </Button.RenderTransform>
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="15"/>
@@ -249,7 +305,7 @@
                      VerticalAlignment="Center"
                      FontSize="14"
                      />
-            <Button Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Margin="40 0" Cursor="Hand" Click="Button_Click">
+            <Button x:Name="SaveButton" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Margin="50 0" Cursor="Hand" Click="SaveButton_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -272,9 +328,15 @@
                         </Canvas>
                     </Viewbox>
                 </Grid>
+
+                <Button.RenderTransformOrigin>0.5, 0.5</Button.RenderTransformOrigin>
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                </Button.RenderTransform>
+
             </Button>
 
-            <Button Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Cursor="Hand">
+            <Button x:Name="CancelButton" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Cursor="Hand" Click="CancelButton_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>

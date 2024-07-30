@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Cells, Version=24.7.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aspose.Cells.24.7.0\lib\net40\Aspose.Cells.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetProjects.SVGImage, Version=5.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetProjects.SVGImage.5.2.1\lib\net47\DotNetProjects.SVGImage.dll</HintPath>
     </Reference>
@@ -192,6 +195,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="bank_dannykh_ob_otkhodakh-_3_.xlsx" />
+    <None Include="BDO.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

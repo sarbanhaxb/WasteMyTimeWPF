@@ -158,7 +158,7 @@ namespace WasteMyTime
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (TreeWidget.SelectedItem != null)
             {
@@ -173,6 +173,28 @@ namespace WasteMyTime
                     this.PritnTree();
                 }
             }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (TreeWidget.SelectedItem != null)
+            {
+                if (TreeWidget.SelectedValue is City city)
+                {
+                    TextBoxCityName.Text = Convert.ToString(city.Title);
+                }
+                else if (TreeWidget.SelectedItem is ObjectItem obj)
+                {
+                    TextBoxObjectTitle.Text = Convert.ToString(obj.Title);
+
+                }
+            }
+        }
+
+        private void ShowBDOMenu_Click(object sender, RoutedEventArgs e)
+        {
+            WindowBDO windowBDO = new WindowBDO();
+            windowBDO.ShowDialog();
         }
     }
 }
