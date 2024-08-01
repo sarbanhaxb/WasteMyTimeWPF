@@ -26,50 +26,12 @@ namespace WasteMyTime
         {
             InitializeComponent();
 
-            //var _itemSourceList = new CollectionViewSource() { Source = SQLquery.LoadBDO() };
-            //_itemSourceList.Filter += new FilterEventHandler(YourFilter);
-            //ICollectionView ItemList = _itemSourceList.View;
+            DataContext = new MainViewModel();
 
-            BDOItems itemSourceList = SQLquery.LoadBDO();
-            ICollectionView cvTasks = CollectionViewSource.GetDefaultView(TableInfo.ItemsSource);
-            TableInfo.ItemsSource = itemSourceList;
+            //BDOItems itemSourceList = SQLquery.LoadBDO();
+            //ICollectionView cvTasks = CollectionViewSource.GetDefaultView(TableInfo.ItemsSource);
+            //TableInfo.ItemsSource = itemSourceList;
+
         }
-
-        //private void YourFilter(object sender, FilterEventArgs e)
-        //{
-        //    var obj = e.Item as BDOItem;
-        //    if (obj != null)
-        //    {
-        //        if (obj.Number.Contains(TEXTFILTER.Text))
-        //        {
-        //            e.Accepted = true;
-        //        }
-        //        else
-        //        {
-        //            e.Accepted = false;
-        //        }
-        //    }
-        //}
-
-        //private void CollectionViewSource_Filter(object sender, FilterEventArgs e)
-        //{
-        //    BDOItem t = e.Item as BDOItem;
-        //    if (t != null) 
-        //    {
-        //        if (this.cbComleteFilter.IsChecked == true && t.Complete == true) 
-        //        {
-        //            e.Accepted = false;
-        //        }
-        //        else
-        //        {
-        //            e.Accepted = true;
-        //        }
-        //    }
-        //}
-
-        //private void TEXTFILTER_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-
-        //}
     }
 }

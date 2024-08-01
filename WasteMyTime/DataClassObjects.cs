@@ -5,21 +5,65 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using Aspose.Cells;
 
 
 namespace WasteMyTime
 {
-    public class BDOItems : ObservableCollection<BDOItem>
+    //public class BDOItems : ObservableCollection<BDOItem>
+    //{
+    //    public BDOItems() { }
+    //}
+
+    public class MainViewModel : INotifyPropertyChanged
     {
-        public BDOItems() { }
+        public ObservableCollection<BDOItem> Items { get; set; }
+        public ICollectionView FilteredItems { get; set; }
+
+        private string _filterText;
+        public string FilterText
+        {
+            get => _filterText;
+            set
+            {
+                _filterText = value;
+                OnPropertyChanged(nameof(FilterText));
+                FilteredItems.Refresh();
+            }
+        }
+
+        public MainViewModel() 
+        {
+            Items = SQLquery.LoadBDO();
+            FilteredItems = CollectionViewSource.GetDefaultView(Items);
+            FilteredItems.Filter = FilterItems;
+        }
+
+        private bool FilterItems(object obj)
+        {
+            if (obj is BDOItem item)
+            {
+                if (string.IsNullOrEmpty(FilterText))
+                {
+                    return true; // Если фильтра нет, возвращаем все элементы
+                }
+                return item.Title != null && item.Title.Contains(FilterText);
+            }
+            return false;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
+
+
+
     public class City : INotifyPropertyChanged
     {
-        //БЫЛО
-        //public int Id { get; set; }
-        //public string Title { get; set; }
-        //public ObservableCollection<ObjectItem> Objects { get; set; } = new ObservableCollection<ObjectItem>();
         public int Id { get; set; }
         public string Title { get; set; }
         public ObservableCollection<ObjectItem> Objects { get; set; }

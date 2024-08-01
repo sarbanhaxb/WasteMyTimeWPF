@@ -50,9 +50,9 @@ namespace WasteMyTime
             }
         }
 
-        public static BDOItems LoadBDO()
+        public static ObservableCollection<BDOItem> LoadBDO()
         {
-            var ItemsSource = new BDOItems();
+            var ItemsSource = new ObservableCollection<BDOItem>();
             string sqlExpression = $"SELECT * FROM bdo";
 
             using (var connection = new SQLiteConnection($"Data Source=C:/Users/sarba/Desktop/C++/WasteMyTime/WasteMyTime/BDO.db"))

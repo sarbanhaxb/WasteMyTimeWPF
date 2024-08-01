@@ -8,25 +8,26 @@
         Title="WindowBDO" Height="800" Width="Auto" ResizeMode="CanResizeWithGrip" WindowState="Maximized"
         >
 
-    <Window.Resources>
+    <!--<Window.Resources>
         <local:BDOItems x:Key="itemSourceList"/>
         <CollectionViewSource x:Key="cvsBDOItems" Source="{StaticResource itemSourceList}"
-                              Filter="CollectionViewSource_Filter">
+                              >
         </CollectionViewSource>
-    </Window.Resources>
+    </Window.Resources>-->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-
+        <!--<StackPanel Grid.Row="0" Grid.Column="0">-->
         <DataGrid x:Name="TableInfo" 
                   d:ItemsSource="{d:SampleData ItemCount=4}" 
                   AutoGenerateColumns="False" 
                   IsReadOnly="True" 
                   Width="Auto" Margin="20 5" Padding="2" 
                   BorderThickness="1" BorderBrush="Black"
-                  ItemsSource="{Binding Source={StaticResource cvsBDOItems}}"
+                  ItemsSource="{Binding FilteredItems}"
                   CanUserAddRows="False"
                   >
             <DataGrid.Columns>
@@ -56,6 +57,8 @@
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                             <Setter Property="VerticalAlignment" Value="Center" />
                             <Setter Property="TextAlignment" Value="Right" />
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -171,6 +174,14 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBox x:Name="TEXTFILTER" HorizontalAlignment="Left" Margin="81,66,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TEXTFILTER_TextChanged"/>
+        <TextBox Width="200" Margin="10" 
+                     Text="{Binding FilterTextTitle, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="1" Grid.Column="0"
+                     />
+        <TextBox Width="200" Margin="10" 
+                     Text="{Binding FilterTextNumber, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="2" Grid.Column="0"
+                     />
+        <!--</StackPanel>-->
     </Grid>
 </Window>
