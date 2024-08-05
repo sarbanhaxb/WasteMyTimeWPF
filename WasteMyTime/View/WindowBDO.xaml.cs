@@ -13,7 +13,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WasteMyTime.Model;
+using WasteMyTime.ViewModel;
 using static MaterialDesignThemes.Wpf.Theme;
+using Button = System.Windows.Controls.Button;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace WasteMyTime
 {
@@ -25,13 +29,7 @@ namespace WasteMyTime
         public WindowBDO()
         {
             InitializeComponent();
-
-            DataContext = new MainViewModel();
-
-            //BDOItems itemSourceList = SQLquery.LoadBDO();
-            //ICollectionView cvTasks = CollectionViewSource.GetDefaultView(TableInfo.ItemsSource);
-            //TableInfo.ItemsSource = itemSourceList;
-
         }
+
     }
 }

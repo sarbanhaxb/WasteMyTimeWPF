@@ -11,11 +11,6 @@ using Aspose.Cells;
 
 namespace WasteMyTime
 {
-    //public class BDOItems : ObservableCollection<BDOItem>
-    //{
-    //    public BDOItems() { }
-    //}
-
     public class MainViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<BDOItem> Items { get; set; }
@@ -33,11 +28,15 @@ namespace WasteMyTime
             }
         }
 
+
         public MainViewModel() 
         {
             Items = SQLquery.LoadBDO();
             FilteredItems = CollectionViewSource.GetDefaultView(Items);
             FilteredItems.Filter = FilterItems;
+
+            var groupDescription = new PropertyGroupDescription(nameof(BDOItem.Number));
+            FilteredItems.GroupDescriptions.Add(groupDescription);
         }
 
         private bool FilterItems(object obj)
@@ -59,7 +58,6 @@ namespace WasteMyTime
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
 
 
     public class City : INotifyPropertyChanged
@@ -104,6 +102,18 @@ namespace WasteMyTime
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+    }
+
+    public class CalcOption
+    {
+        private int id;
+        private int objectID;
+        private string title;
+
+        public int Id { get; set; }
+        public int ObjectID { get; set; }
+        public string Title { get; set; }
+        public CalcOption() { }
     }
     public class BDOItem
     {

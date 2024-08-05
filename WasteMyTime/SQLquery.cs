@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading;
 using System.Data.Entity;
+using System.Windows.Documents;
 
 namespace WasteMyTime
 {
@@ -47,8 +48,77 @@ namespace WasteMyTime
                     "title VARCHAR(100) NOT NULL UNIQUE, " +
                     "FOREIGN KEY (id_city) REFERENCES cities(id) ON DELETE CASCADE)";
                 command.ExecuteNonQuery();
+
+                command.CommandText = "CREATE TABLE IF NOT EXISTS CalcsOption" +
+                                    "(id INTEGER PRIMARY KEY, " +
+                                    "object_id INTEGER, " +
+                                    "title VARCHAR(100) NOT NULL UNIQUE, " +
+                                    "FOREIGN KEY (object_id) REFERENCES objects(id) ON DELETE CASCADE)";
+                command.ExecuteNonQuery();
             }
         }
+
+        public static ObservableCollection<CalcOption> LoadCalcsOption(string Dataname, int id_object)
+        {
+            var itemSource = new ObservableCollection<CalcOption>();
+            string sqlExpression = $"SELECT * FROM CalcsOption WHERE object_id={id_object}";
+
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CalcOption item = new CalcOption();
+                        item.Id = Convert.ToInt32(reader["id"]);
+                        item.ObjectID = Convert.ToInt32(reader["object_id"]);
+                        item.Title = Convert.ToString(reader["title"]);
+                        itemSource.Add(item);
+                    }
+                }
+
+            }
+            return itemSource;
+        }
+
+        public static void AddCalcOption(string Dataname, int object_id, string title)
+        {
+            string sqlExpression = $"INSERT INTO CalcsOption (object_id, title) VALUES ({object_id}, '{title}')";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                try
+                {
+                    SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                    command.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+        public static void DelCalcOption(string Dataname, int id)
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection($"Data Source={Dataname}; foreign_keys = ON;"))
+                {
+                    connection.Open();
+                    var command = new SQLiteCommand("DELETE FROM CalcsOption WHERE id = @id", connection);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            }
+        }
+
 
         public static ObservableCollection<BDOItem> LoadBDO()
         {
@@ -67,7 +137,7 @@ namespace WasteMyTime
                         item.Number = Convert.ToString(reader["num"]);
                         item.Title = Convert.ToString(reader["title"]);
                         item.OriginManufacturing = Convert.ToString(reader["originManufacturing"]);
-                        item.OriginProducts= Convert.ToString(reader["originProducts"]);
+                        item.OriginProducts = Convert.ToString(reader["originProducts"]);
                         item.OriginProcess = Convert.ToString(reader["originProcess"]);
                         item.Compound = Convert.ToString(reader["compound"]);
                         item.CompoundPercentMin = Convert.ToDouble(reader["compoundPercentMin"]);

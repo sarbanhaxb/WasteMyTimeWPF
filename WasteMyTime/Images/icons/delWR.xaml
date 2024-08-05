@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<Grid xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Grid.Resources>
+        <ResourceDictionary/>
+    </Grid.Resources>
+    <Viewbox Stretch="Uniform" Name="_____1">
+        <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
+            <Canvas.Clip>
+                <RectangleGeometry Rect="0.0,0.0,32.0,32.0"/>
+            </Canvas.Clip>
+            <Canvas UseLayoutRounding="False" RenderTransform="1.0,0.0,0.0,1.0,0.00195204,0.055664">
+                <Rectangle RadiusX="0.0" RadiusY="0.0" Canvas.Left="0.0" Canvas.Top="0.0" Width="32.0" Height="32.0"/>
+            </Canvas>
+            <Canvas UseLayoutRounding="False">
+                <Rectangle RadiusX="0.0" RadiusY="0.0" Canvas.Left="0.0" Canvas.Top="0.0" Width="32.0" Height="32.0"/>
+            </Canvas>
+            <Canvas UseLayoutRounding="False">
+                <Path Fill="#ff000000">
+                    <Path.Data>
+                        <PathGeometry Figures="M 24 14.059 V 5.584 L 18.414 0 H 0 v 32 h 24 v -0.059 c 4.499 -0.5 7.998 -4.309 8 -8.941 c -0.002 -4.634 -3.501 -8.444 -8 -8.941 z M 17.998 2.413 L 21.586 6 H 17.998 Z M 2 30 V 1.998 h 14 v 6.001 h 6 v 6.06 C 20.248 14.253 18.648 14.949 17.348 16 H 4 v 2 h 11.517 c -0.412 0.616 -0.743 1.289 -0.994 2 H 4 v 2 H 14.059 C 14.022 22.329 14 22.661 14 23 c 0 2.829 1.308 5.351 3.349 7 z M 23 29.883 C 19.199 29.874 16.124 26.799 16.115 23 C 16.124 19.199 19.199 16.124 23 16.115 C 26.799 16.124 29.874 19.199 29.883 23 C 29.874 26.799 26.799 29.874 23 29.883 Z M 20 12 H 4 v 2 h 16 z" FillRule="Nonzero"/>
+                    </Path.Data>
+                </Path>
+                <Path Fill="#ff000000">
+                    <Path.Data>
+                        <PathGeometry Figures="M 23 21 L 21 19 L 19 21 L 21 23 L 19 25 L 21 27 L 23 25 L 25 27 L 27 25 L 25 23 L 27 21 L 25 19 Z"/>
+                    </Path.Data>
+                </Path>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+</Grid>

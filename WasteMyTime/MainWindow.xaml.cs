@@ -196,5 +196,14 @@ namespace WasteMyTime
             WindowBDO windowBDO = new WindowBDO();
             windowBDO.ShowDialog();
         }
+
+        private void TreeWidget_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (TreeWidget.SelectedItem != null && TreeWidget.SelectedItem is ObjectItem CurrentObj)
+            {
+                var ObjectWork = new ObjectWorkWindow(CurrentObj);
+                ObjectWork.ShowDialog();
+            }
+        }
     }
 }

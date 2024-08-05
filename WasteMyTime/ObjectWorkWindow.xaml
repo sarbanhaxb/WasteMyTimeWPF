@@ -1,0 +1,182 @@
+﻿<Window x:Class="WasteMyTime.ObjectWorkWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WasteMyTime"
+        mc:Ignorable="d"
+        Title="ObjectWorkWindow" Height="600" Width="800">
+    <!--<Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF909090" Offset="0.0"/>
+            <GradientStop Color="#FFFFFF" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>-->
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                To="0.9" 
+                                Duration="0:0:0.1" />
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                To="0.9" 
+                                Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.PreviewMouseUp">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                To="1.0" 
+                                Duration="0:0:0.1" />
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                To="1.0" 
+                                Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height ="2*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="9*"/>
+
+            </Grid.ColumnDefinitions>
+    
+            <Button x:Name="AddCalcButton" Background="Transparent" Width="50" BorderThickness="0" Height="50" Grid.Column="1" ToolTip="Добавить вариант расчета" Click="AddCalcButton_Click">
+                    <Viewbox Stretch="Uniform" Name="_____1">
+                    <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
+                        <Canvas.Clip>
+                            <RectangleGeometry Rect="0.0,0.0,32.0,32.0"/>
+                        </Canvas.Clip>
+                        <Canvas UseLayoutRounding="False" RenderTransform="1.0,0.0,0.0,1.0,0.00195204,0.055664">
+                            <Rectangle RadiusX="0.0" RadiusY="0.0" Canvas.Left="0.0" Canvas.Top="0.0" Width="32.0" Height="32.0"/>
+                        </Canvas>
+                        <Canvas UseLayoutRounding="False">
+                            <Rectangle RadiusX="0.0" RadiusY="0.0" Canvas.Left="0.0" Canvas.Top="0.0" Width="32.0" Height="32.0"/>
+                        </Canvas>
+                        <Canvas UseLayoutRounding="False">
+                            <Path Fill="#ff000000">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 24 14.059 V 5.584 L 18.414 0 H 0 v 32 h 24 v -0.059 c 4.499 -0.5 7.998 -4.309 8 -8.941 c -0.002 -4.634 -3.501 -8.444 -8 -8.941 z M 17.998 2.413 L 21.586 6 H 17.998 Z M 2 30 V 1.998 h 14 v 6.001 h 6 v 6.06 C 20.248 14.253 18.648 14.949 17.348 16 H 4 v 2 h 11.517 c -0.412 0.616 -0.743 1.289 -0.994 2 H 4 v 2 H 14.059 C 14.022 22.329 14 22.661 14 23 c 0 2.829 1.308 5.351 3.349 7 z M 23 29.883 C 19.199 29.874 16.124 26.799 16.115 23 C 16.124 19.199 19.199 16.124 23 16.115 C 26.799 16.124 29.874 19.199 29.883 23 C 29.874 26.799 26.799 29.874 23 29.883 Z M 20 12 H 4 v 2 h 16 z" FillRule="Nonzero"/>
+                                </Path.Data>
+                            </Path>
+                            <Canvas UseLayoutRounding="False">
+                                <Path Fill="#ff000000">
+                                    <Path.Data>
+                                        <PathGeometry Figures="M 22 28 L 24.002 28 L 24.002 24 L 28 24 L 28 22 L 24.002 22 L 24.002 18 L 22 18 L 22 22 L 18 22 L 18 24 L 22 24 Z"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Canvas>
+                </Viewbox>
+            </Button>
+            <Button x:Name="EditCalcButton" Grid.Column="2" Width="50" Height="50" Background="Transparent"  BorderThickness="0" ToolTip="Редактировать вариант расчета">
+                <Viewbox Stretch="Uniform" Name="____1">
+                    <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
+                        <Canvas.Clip>
+                            <RectangleGeometry Rect="0.0,0.0,32.0,32.0"/>
+                        </Canvas.Clip>
+                        <Canvas UseLayoutRounding="False" RenderTransform="1.0,0.0,0.0,1.0,0.00195204,0.055664">
+                            <Rectangle RadiusX="0.0" RadiusY="0.0" Canvas.Left="0.0" Canvas.Top="0.0" Width="32.0" Height="32.0"/>
+                        </Canvas>
+                        <Canvas UseLayoutRounding="False">
+                            <Path Fill="#ff000000">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 24 14.059 V 5.584 L 18.414 0 H 0 v 32 h 24 v -0.059 c 4.499 -0.5 7.998 -4.309 8 -8.941 c -0.002 -4.634 -3.501 -8.444 -8 -8.941 z M 17.998 2.413 L 21.586 6 H 17.998 Z M 2 30 V 1.998 h 14 v 6.001 h 6 v 6.06 C 20.248 14.253 18.648 14.949 17.348 16 H 4 v 2 h 11.517 c -0.412 0.616 -0.743 1.289 -0.994 2 H 4 v 2 H 14.059 C 14.022 22.329 14 22.661 14 23 c 0 2.829 1.308 5.351 3.349 7 z M 23 29.883 C 19.199 29.874 16.124 26.799 16.115 23 C 16.124 19.199 19.199 16.124 23 16.115 C 26.799 16.124 29.874 19.199 29.883 23 C 29.874 26.799 26.799 29.874 23 29.883 Z M 20 12 H 4 v 2 h 16 z" FillRule="Nonzero"/>
+                                </Path.Data>
+                            </Path>
+                            <Canvas UseLayoutRounding="False">
+                                <Path Fill="#ff000000">
+                                    <Path.Data>
+                                        <PathGeometry Figures="M 19 24 L 22 27 L 19 27 Z"/>
+                                    </Path.Data>
+                                </Path>
+                                <Rectangle RadiusX="0.0" RadiusY="0.0" RenderTransform="-0.7071,0.7071,-0.7071,-0.7071,7.536362992900003,1.1204542070999963" Canvas.Left="20.464001" Canvas.Top="19.879" Width="7.0710001" Height="4.243" Fill="#ff000000"/>
+                            </Canvas>
+                        </Canvas>
+                    </Canvas>
+                </Viewbox>
+            </Button>
+            <Button x:Name="DelCalcButton" Background="Transparent" Height="50" Width="50" BorderThickness="0" Grid.Column="3" ToolTip="Удалить вариант расчета" Click="DelCalcButton_Click">
+                <Viewbox Stretch="Uniform" Name="___1">
+                    <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
+                        <Canvas.Clip>
+                            <RectangleGeometry Rect="0.0,0.0,32.0,32.0"/>
+                        </Canvas.Clip>
+                        <Canvas UseLayoutRounding="False" RenderTransform="1.0,0.0,0.0,1.0,0.00195204,0.055664">
+                            <Rectangle RadiusX="0.0" RadiusY="0.0" Canvas.Left="0.0" Canvas.Top="0.0" Width="32.0" Height="32.0"/>
+                        </Canvas>
+                        <Canvas UseLayoutRounding="False">
+                            <Rectangle RadiusX="0.0" RadiusY="0.0" Canvas.Left="0.0" Canvas.Top="0.0" Width="32.0" Height="32.0"/>
+                        </Canvas>
+                        <Canvas UseLayoutRounding="False">
+                            <Path Fill="#ff000000">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 24 14.059 V 5.584 L 18.414 0 H 0 v 32 h 24 v -0.059 c 4.499 -0.5 7.998 -4.309 8 -8.941 c -0.002 -4.634 -3.501 -8.444 -8 -8.941 z M 17.998 2.413 L 21.586 6 H 17.998 Z M 2 30 V 1.998 h 14 v 6.001 h 6 v 6.06 C 20.248 14.253 18.648 14.949 17.348 16 H 4 v 2 h 11.517 c -0.412 0.616 -0.743 1.289 -0.994 2 H 4 v 2 H 14.059 C 14.022 22.329 14 22.661 14 23 c 0 2.829 1.308 5.351 3.349 7 z M 23 29.883 C 19.199 29.874 16.124 26.799 16.115 23 C 16.124 19.199 19.199 16.124 23 16.115 C 26.799 16.124 29.874 19.199 29.883 23 C 29.874 26.799 26.799 29.874 23 29.883 Z M 20 12 H 4 v 2 h 16 z" FillRule="Nonzero"/>
+                                </Path.Data>
+                            </Path>
+                            <Path Fill="#ff000000">
+                                <Path.Data>
+                                    <PathGeometry Figures="M 23 21 L 21 19 L 19 21 L 21 23 L 19 25 L 21 27 L 23 25 L 25 27 L 27 25 L 25 23 L 27 21 L 25 19 Z"/>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Canvas>
+                </Viewbox>
+            </Button>
+        </Grid>
+        
+        <Menu Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <MenuItem VerticalAlignment="Center" VerticalContentAlignment="Center" Header="Данные" Height="27">
+                <MenuItem Header="Добавить"/>
+                <MenuItem Header="Удалить"/>
+            </MenuItem>
+            <MenuItem Header="Настройки">
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <MenuItem Header="О программе" />
+            </MenuItem>
+            <MenuItem Header="Выход"/>
+        </Menu>
+        <DataGrid IsReadOnly="True" x:Name="MainDataGrid" Grid.Row="2" ItemsSource="{Binding CalcsOption}" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=2}" Padding="5 0" Margin="5 0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Код" Binding="{Binding Id}" Width="Auto"/>
+                <DataGridTextColumn Header="Название расчета" Binding="{Binding Title}" Width="1*"/>
+            </DataGrid.Columns>
+            
+            
+        </DataGrid>
+        <TextBlock x:Name="TextBlockInfo" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Margin="5" Padding="5"/>
+    </Grid>
+</Window>

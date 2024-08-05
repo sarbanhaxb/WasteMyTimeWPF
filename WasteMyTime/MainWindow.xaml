@@ -89,7 +89,7 @@
         <Image Source="Images/fon.jpg" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Stretch="Fill" IsEnabled="False"/>
 
         <UniformGrid Grid.Row="2" Rows="1" Columns="3">
-            <Button x:Name="MainWindowsAddCityButton" VerticalAlignment="Center" Height="50" Width="50" Click="MainWindowsAddCityButton_Click" Cursor="Hand">
+            <Button x:Name="MainWindowsAddCityButton" VerticalAlignment="Center" Height="50" Width="50" Click="MainWindowsAddCityButton_Click" Cursor="Hand" ToolTip="Добавить">
                 
                 
                 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
@@ -115,7 +115,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-            <Button x:Name="MainWindowDeleteCityButton" VerticalAlignment="Center" Height="50" Width="50" Grid.Row="2" Click="MainWindowDeleteCityButton_Click" Cursor="Hand">
+            <Button x:Name="MainWindowDeleteCityButton" VerticalAlignment="Center" Height="50" Width="50" Grid.Row="2" Click="MainWindowDeleteCityButton_Click" Cursor="Hand" ToolTip="Удаление">
                 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
                     <Canvas Name="svg6" Width="24" Height="24">
                         <Canvas.RenderTransform>
@@ -145,7 +145,7 @@
                     <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
                 </Button.RenderTransform>
             </Button>
-            <Button x:Name="MainWindowExitButton" VerticalAlignment="Center" Height="50" Width="50" Cursor="Hand" Click="MainWindowExitButton_Click">
+            <Button x:Name="MainWindowExitButton" VerticalAlignment="Center" Height="50" Width="50" Cursor="Hand" Click="MainWindowExitButton_Click" ToolTip="Выход">
                 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
                     <Canvas Name="svg4" Width="24" Height="24">
                         <Canvas.RenderTransform>
@@ -180,7 +180,7 @@
           Margin="5"
           Padding="5" 
           SelectedItemChanged="TreeWidget_SelectedItemChanged"
-                  BorderThickness="1">
+                  BorderThickness="1" MouseDoubleClick="TreeWidget_MouseDoubleClick">
             
 
             <TreeView.ItemContainerStyle>
@@ -191,16 +191,12 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Objects}">
                     <StackPanel Orientation="Horizontal">
-                        <!--This file is NOT compatible with Silverlight-->
-
-                        <!--This file is NOT compatible with Silverlight-->
                         <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
                             <Canvas Name="svg4" Width="24" Height="24">
                                 <Canvas.RenderTransform>
                                     <TranslateTransform X="0" Y="0"/>
                                 </Canvas.RenderTransform>
                                 <Canvas.Resources/>
-                                <!--Unknown tag: sodipodi:namedview-->
                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" StrokeThickness="2" Stroke="#FF000000" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Height="17" Canvas.Left="3.5" Stretch="Fill" Canvas.Top="3.5" Width="17" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <Path.Data>
                                         <PathGeometry Figures="M7 9H7.01M7 13H7.01M7 17H7.01M15 7H15.01M15 11H15.01M15 15H15.01M18 14H18.01M18 18H18.01M9 5H4C3.44772 5 3 5.44772 3 6V20C3 20.5523 3.44772 21 4 21H9M12 4.6V19.4C12 19.9601 12 20.2401 12.109 20.454C12.2049 20.6422 12.3578 20.7951 12.546 20.891C12.7599 21 13.0399 21 13.6 21H19.4C19.9601 21 20.2401 21 20.454 20.891C20.6422 20.7951 20.7951 20.6422 20.891 20.454C21 20.2401 21 19.9601 21 19.4V11.5C21 11.0341 21 10.8011 20.9239 10.6173C20.8224 10.3723 20.6277 10.1776 20.3827 10.0761C20.1989 10 19.9659 10 19.5 10C19.0341 10 18.8011 10 18.6173 9.92388C18.3723 9.82239 18.1776 9.62771 18.0761 9.38268C18 9.19891 18 8.96594 18 8.5V4.6C18 4.03995 18 3.75992 17.891 3.54601C17.7951 3.35785 17.6422 3.20487 17.454 3.10899C17.2401 3 16.9601 3 16.4 3H13.6C13.0399 3 12.7599 3 12.546 3.10899C12.3578 3.20487 12.2049 3.35785 12.109 3.54601C12 3.75992 12 4.03995 12 4.6Z" FillRule="NonZero"/>
@@ -208,7 +204,6 @@
                                 </Path>
                             </Canvas>
                         </Viewbox>
-
                         <TextBlock Text="{Binding Title}"/>
                     </StackPanel>
                     <HierarchicalDataTemplate.ItemTemplate>
@@ -220,7 +215,6 @@
                                             <TranslateTransform X="0" Y="0"/>
                                         </Canvas.RenderTransform>
                                         <Canvas.Resources/>
-                                        <!--Unknown tag: sodipodi:namedview-->
                                         <Canvas Name="organization">
                                             <Canvas Name="g4">
                                                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" Fill="#FF000000" Height="21" Stretch="Fill" Width="17" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="3.75" Canvas.Top="2.5">
@@ -305,7 +299,12 @@
                      VerticalAlignment="Center"
                      FontSize="14"
                      />
-            <Button x:Name="SaveButton" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Margin="50 0" Cursor="Hand" Click="SaveButton_Click">
+            <Button x:Name="SaveButton" Grid.Column="2" 
+                    HorizontalAlignment="Right" Grid.Row="5" 
+                    VerticalAlignment="Center" Width="32" Height="32" 
+                    Margin="50 0" Cursor="Hand" Click="SaveButton_Click"
+                    ToolTip="Сохранить изменения"
+                    >
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
@@ -336,7 +335,10 @@
 
             </Button>
 
-            <Button x:Name="CancelButton" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" VerticalAlignment="Center" Width="32" Height="32" Cursor="Hand" Click="CancelButton_Click">
+            <Button x:Name="CancelButton" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="5" 
+                    VerticalAlignment="Center" Width="32" Height="32" Cursor="Hand" Click="CancelButton_Click"
+                    ToolTip="Отменить изменения"
+                    >
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
