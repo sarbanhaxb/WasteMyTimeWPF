@@ -129,6 +129,9 @@
     <Compile Include="ObjectWorkWindow.xaml.cs">
       <DependentUpon>ObjectWorkWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelfCalcWindow.xaml.cs">
+      <DependentUpon>SelfCalcWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SQLquery.cs" />
     <Compile Include="ViewModel\BDOitemsVM.cs" />
     <Compile Include="View\WindowBDO.xaml.cs">
@@ -198,6 +201,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ObjectWorkWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelfCalcWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

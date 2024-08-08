@@ -101,7 +101,7 @@
                     </Canvas>
                 </Viewbox>
             </Button>
-            <Button x:Name="EditCalcButton" Grid.Column="2" Width="50" Height="50" Background="Transparent"  BorderThickness="0" ToolTip="Редактировать вариант расчета">
+            <Button x:Name="EditCalcButton" Grid.Column="2" Width="50" Height="50" Background="Transparent"  BorderThickness="0" ToolTip="Редактировать вариант расчета" Click="EditCalcButton_Click">
                 <Viewbox Stretch="Uniform" Name="____1">
                     <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
                         <Canvas.Clip>
@@ -169,7 +169,7 @@
             </MenuItem>
             <MenuItem Header="Выход"/>
         </Menu>
-        <DataGrid IsReadOnly="True" x:Name="MainDataGrid" Grid.Row="2" ItemsSource="{Binding CalcsOption}" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=2}" Padding="5 0" Margin="5 0">
+        <DataGrid IsReadOnly="True" x:Name="MainDataGrid" Grid.Row="2" ItemsSource="{Binding CalcsOption}" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=2}" Padding="5 0" Margin="5 0" MouseDoubleClick="MainDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код" Binding="{Binding Id}" Width="Auto"/>
                 <DataGridTextColumn Header="Название расчета" Binding="{Binding Title}" Width="1*"/>

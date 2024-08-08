@@ -25,6 +25,7 @@ namespace WasteMyTime
 
     public partial class MainWindow : Window
     {
+        object currentItem;
         public MainWindow()
         {
             InitializeComponent();
@@ -58,13 +59,21 @@ namespace WasteMyTime
             {
                 if (TreeWidget.SelectedItem is City)
                 {
-                    var item = (City)TreeWidget.SelectedItem;
-                    SQLquery.DeleteCity("database.db", item.Id);
+                    var result = MessageBox.Show("Точно хотите удалить город?\nУдалятся все расчетные данные", "Удаление города", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var item = (City)TreeWidget.SelectedItem;
+                        SQLquery.DeleteCity("database.db", item.Id);
+                    }
                 }
                 else if (TreeWidget.SelectedItem is ObjectItem)
                 {
-                    var item = (ObjectItem)TreeWidget.SelectedItem;
-                    SQLquery.DeleteObject("database.db", item.Id);
+                    var result = MessageBox.Show("Точно хотите удалить объект?\nУдалятся все расчетные данные", "Удаление объекта", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var item = (ObjectItem)TreeWidget.SelectedItem;
+                        SQLquery.DeleteObject("database.db", item.Id);
+                    }
                 }
             }
             this.PritnTree();

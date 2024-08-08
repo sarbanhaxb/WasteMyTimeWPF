@@ -115,6 +115,17 @@ namespace WasteMyTime
         public string Title { get; set; }
         public CalcOption() { }
     }
+
+    public class Waste
+    {
+        public string FKKOcode { get; set; }
+        public string Title { get; set; }
+        public double Normative { get; set; }
+        public bool MethodCheck { get; set; }
+    
+        public Waste() { }
+    }
+
     public class BDOItem
     {
         public int Id { get; set; }

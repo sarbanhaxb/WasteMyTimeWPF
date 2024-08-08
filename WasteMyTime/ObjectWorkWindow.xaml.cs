@@ -29,28 +29,49 @@ namespace WasteMyTime
             this.Title = $"Вариант данных: {CurrentObj.Title}";
             TextBlockInfo.Text = $"Город: {SQLquery.GetCityTitle("database.db", CurrentObj.IdCity)}";
 
-            MainDataGrid.ItemsSource = SQLquery.LoadCalcsOption("database.db", CurrentObj.IdCity);
-
+            MainDataGrid.ItemsSource = SQLquery.LoadCalcsOption("database.db", CurrentObj.Id);
         }
 
         private void AddCalcButton_Click(object sender, RoutedEventArgs e)
         {
-            var addnewcalc = new AddNewCalcOptionWindow(CurrentObj.IdCity);
+            var addnewcalc = new AddNewCalcOptionWindow(CurrentObj.Id);
             addnewcalc.ShowDialog();
             this.RefreshDG();
         }
 
         public void RefreshDG()
         {
-            MainDataGrid.ItemsSource = SQLquery.LoadCalcsOption("database.db", CurrentObj.IdCity);
+            MainDataGrid.ItemsSource = SQLquery.LoadCalcsOption("database.db", CurrentObj.Id);
         }
 
         private void DelCalcButton_Click(object sender, RoutedEventArgs e)
         {
             if (MainDataGrid.SelectedItem != null && MainDataGrid.SelectedItem is CalcOption calcOption)
             {
-                SQLquery.DelCalcOption("database.db", calcOption.Id);
-                this.RefreshDG();
+                var result = MessageBox.Show("Точно хотите удалить расчет?\nУдалятся все данные", "Удаление расчета", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (result == MessageBoxResult.Yes) 
+                {
+                    SQLquery.DelCalcOption("database.db", calcOption.Id);
+                    this.RefreshDG();
+                }
+            }
+        }
+
+        private void MainDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (MainDataGrid.SelectedItem != null && MainDataGrid.SelectedItem is CalcOption calcOption)
+            {
+                SelfCalcWindow selfCalcWindow = new SelfCalcWindow(calcOption.Id);
+                selfCalcWindow.ShowDialog();
+            }
+        }
+
+        private void EditCalcButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainDataGrid.SelectedItem != null && MainDataGrid.SelectedItem is CalcOption calcOption)
+            {
+                SelfCalcWindow selfCalcWindow = new SelfCalcWindow(calcOption.Id);
+                selfCalcWindow.ShowDialog();
             }
         }
     }

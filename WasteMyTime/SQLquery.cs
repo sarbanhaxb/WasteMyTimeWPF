@@ -52,8 +52,18 @@ namespace WasteMyTime
                 command.CommandText = "CREATE TABLE IF NOT EXISTS CalcsOption" +
                                     "(id INTEGER PRIMARY KEY, " +
                                     "object_id INTEGER, " +
-                                    "title VARCHAR(100) NOT NULL UNIQUE, " +
+                                    "title VARCHAR(100) NOT NULL, " +
                                     "FOREIGN KEY (object_id) REFERENCES objects(id) ON DELETE CASCADE)";
+                command.ExecuteNonQuery();
+
+                command.CommandText = "CREATE TABLE IF NOT EXISTS WasteItems" +
+                    "(id INTEGER PRIMARY KEY, " +
+                    "calcOption_id INTEGER, " +
+                    "FKKOcode VARCHAR(100) NOT NULL, " +
+                    "Title VARCHAR(100) NOT NULL, " +
+                    "Normative REAL DEFAULT 0, " +
+                    "MethodCheck int, " +
+                    "FOREIGN KEY (calcOption_id) REFERENCES CalcsOption(id) ON DELETE CASCADE)";
                 command.ExecuteNonQuery();
             }
         }
@@ -288,7 +298,6 @@ namespace WasteMyTime
             }
             catch (SQLiteException ex)
             {
-                Console.WriteLine($"Ошибка при удалении города: {ex.Message}");
                 MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             }
         }
@@ -307,7 +316,6 @@ namespace WasteMyTime
             }
             catch (SQLiteException ex)
             {
-                Console.WriteLine($"Ошибка при удалении объекта: {ex.Message}");
                 MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             }
         }
