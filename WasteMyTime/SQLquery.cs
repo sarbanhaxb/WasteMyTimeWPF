@@ -59,10 +59,9 @@ namespace WasteMyTime
                 command.CommandText = "CREATE TABLE IF NOT EXISTS WasteItems" +
                     "(id INTEGER PRIMARY KEY, " +
                     "calcOption_id INTEGER, " +
-                    "FKKOcode VARCHAR(100) NOT NULL, " +
+                    "FKKOcode VARCHAR(100) NOT NULL UNIQUE, " +
                     "Title VARCHAR(100) NOT NULL, " +
                     "Normative REAL DEFAULT 0, " +
-                    "MethodCheck int, " +
                     "FOREIGN KEY (calcOption_id) REFERENCES CalcsOption(id) ON DELETE CASCADE)";
                 command.ExecuteNonQuery();
             }
@@ -92,6 +91,51 @@ namespace WasteMyTime
             }
             return itemSource;
         }
+
+        public static ObservableCollection<Waste> LoadWaste(string Dataname, int CalcsOption)
+        {
+            var itemSource = new ObservableCollection<Waste>();
+            string sqlExpression = $"SELECT * FROM WasteItems WHERE calcOption_id={CalcsOption}";
+
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand( sqlExpression, connection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Waste item = new Waste();
+                        item.Id = Convert.ToInt32(reader["id"]);
+                        item.calcOption_id = Convert.ToInt32(reader["calcOption_id"]);
+                        item.FKKOcode = (string)reader["FKKOcode"];
+                        item.Title = (string)reader["Title"];
+                        item.Normative = Convert.ToDouble(reader["Normative"]);
+                        itemSource.Add(item);
+                    }
+                }
+            }
+            return itemSource;
+        }
+
+        public static void AddWasteToCalcOption(string Dataname, int CalcOption, string FKKOcode, string Title, double Normative)
+        {
+            string sqlExpression = $"INSERT INTO WasteItems (calcOption_id, FKKOcode, Title, Normative) VALUES ({CalcOption}, '{FKKOcode}', '{Title}', {Normative})";
+            using (var connections = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connections.Open();
+                try
+                {
+                    SQLiteCommand command = new SQLiteCommand(sqlExpression, connections);
+                    command.ExecuteNonQuery();
+                }
+                catch (SQLiteException ex)
+                {
+                    MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
 
         public static void AddCalcOption(string Dataname, int object_id, string title)
         {
@@ -412,6 +456,24 @@ namespace WasteMyTime
         public static void UpdateObjectData(string Dataname, int id, string title)
         {
             string sqlExpression = $"UPDATE objects SET title='{title}' WHERE id={id}";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (System.Data.SQLite.SQLiteException ex)
+                {
+                    MessageBox.Show($"Ошибка изменения наименования: {ex.Message}", "Ошибка базы данных", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        public static void UpdateCalcOptionTitle(string Dataname, int id, string title)
+        {
+            string sqlExpression = $"UPDATE CalcsOption SET title='{title}' WHERE id={id}";
             using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
             {
                 connection.Open();

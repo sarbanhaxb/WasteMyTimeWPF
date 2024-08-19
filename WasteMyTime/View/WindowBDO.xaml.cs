@@ -26,10 +26,36 @@ namespace WasteMyTime
     /// </summary>
     public partial class WindowBDO : Window
     {
+
         public WindowBDO()
         {
             InitializeComponent();
         }
+    }
 
+    public class WindowBDOw : WindowBDO
+    {
+        public int parId;
+        public WindowBDOw(int Id) : base()
+        {
+            parId = Id;
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem menuItem = new MenuItem();
+            menuItem.Header = "Выбрать";
+            menuItem.Click += MenuAddWasteClick;
+
+            contextMenu.Items.Add(menuItem);
+            this.BDODataGrid.ContextMenu = contextMenu;
+        }
+
+        private void MenuAddWasteClick(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(":asdsad");
+            Console.WriteLine(BDODataGrid.SelectedItem.ToString());
+            if (BDODataGrid.SelectedItem is BDOItem bdoItem)
+            {
+                SQLquery.AddWasteToCalcOption("database.db", parId, bdoItem.Number, bdoItem.Title, 0);
+            }
+        }
     }
 }

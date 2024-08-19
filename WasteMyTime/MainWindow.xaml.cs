@@ -31,10 +31,10 @@ namespace WasteMyTime
             InitializeComponent();
             SQLquery.ForeignKeysOn("database.db");
             SQLquery.CreateDatabase("database.db");
-            this.PritnTree();
+            this.PrintTree();
         }
 
-        private void PritnTree()
+        private void PrintTree()
         {
             var cities = SQLquery.GetCitiesWithObjects("database.db");
             TreeWidget.ItemsSource = cities;
@@ -50,7 +50,7 @@ namespace WasteMyTime
             AddCityWindow addCityWindow = new AddCityWindow();
             addCityWindow.Owner = this;
             addCityWindow.ShowDialog();
-            this.PritnTree();
+            this.PrintTree();
         }
 
         private void MainWindowDeleteCityButton_Click(object sender, RoutedEventArgs e)
@@ -76,7 +76,7 @@ namespace WasteMyTime
                     }
                 }
             }
-            this.PritnTree();
+            this.PrintTree();
         }
 
         private void TreeWidget_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -117,7 +117,7 @@ namespace WasteMyTime
                 int id_city = ((City)TreeWidget.SelectedItem).Id;
                 var addObjectWindow = new AddObjectWindow(id_city);
                 addObjectWindow.ShowDialog();
-                this.PritnTree();
+                this.PrintTree();
             }
         }
 
@@ -126,12 +126,12 @@ namespace WasteMyTime
             if (TreeWidget.SelectedItem is ObjectItem item)
             {
                 SQLquery.DeleteObject("database.db", item.Id);
-                this.PritnTree();
+                this.PrintTree();
             }
             else if (TreeWidget.SelectedItem is City city)
             {
                 SQLquery.DeleteCity("database.db", city.Id);
-                this.PritnTree();
+                this.PrintTree();
             }
         }
 
@@ -174,12 +174,12 @@ namespace WasteMyTime
                 if (TreeWidget.SelectedValue is City city)
                 {
                     SQLquery.UpdateCityData("database.db", city.Id, TextBoxCityName.Text);
-                    this.PritnTree();
+                    this.PrintTree();
                 }
                 else if (TreeWidget.SelectedItem is ObjectItem obj)
                 {
                     SQLquery.UpdateObjectData("database.db", obj.Id, TextBoxObjectTitle.Text);
-                    this.PritnTree();
+                    this.PrintTree();
                 }
             }
         }

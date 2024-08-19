@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Aspose.Cells;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static MaterialDesignThemes.Wpf.Theme;
 
 namespace WasteMyTime
 {
@@ -61,7 +64,7 @@ namespace WasteMyTime
         {
             if (MainDataGrid.SelectedItem != null && MainDataGrid.SelectedItem is CalcOption calcOption)
             {
-                SelfCalcWindow selfCalcWindow = new SelfCalcWindow(calcOption.Id);
+                SelfCalcWindow selfCalcWindow = new SelfCalcWindow(calcOption.Id, calcOption.Title);
                 selfCalcWindow.ShowDialog();
             }
         }
@@ -70,9 +73,24 @@ namespace WasteMyTime
         {
             if (MainDataGrid.SelectedItem != null && MainDataGrid.SelectedItem is CalcOption calcOption)
             {
-                SelfCalcWindow selfCalcWindow = new SelfCalcWindow(calcOption.Id);
+                SelfCalcWindow selfCalcWindow = new SelfCalcWindow(calcOption.Id, calcOption.Title);
                 selfCalcWindow.ShowDialog();
             }
+        }
+
+        private void MainDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            CalcOption p = e.Row.Item as CalcOption;
+            try
+            {
+                int selectedColumn = MainDataGrid.CurrentCell.Column.DisplayIndex;
+                var selectedCell = MainDataGrid.SelectedCells[selectedColumn];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                var res = cellContent as System.Windows.Controls.TextBox;
+
+                SQLquery.UpdateCalcOptionTitle("database.db", p.Id, res.Text);
+            }
+            catch { }
         }
     }
 }

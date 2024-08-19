@@ -169,10 +169,10 @@
             </MenuItem>
             <MenuItem Header="Выход"/>
         </Menu>
-        <DataGrid IsReadOnly="True" x:Name="MainDataGrid" Grid.Row="2" ItemsSource="{Binding CalcsOption}" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=2}" Padding="5 0" Margin="5 0" MouseDoubleClick="MainDataGrid_MouseDoubleClick">
+        <DataGrid x:Name="MainDataGrid" CanUserAddRows="False" Grid.Row="2" ItemsSource="{Binding CalcsOption}" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=2}" Padding="5 0" Margin="5 0" MouseDoubleClick="MainDataGrid_MouseDoubleClick" CellEditEnding="MainDataGrid_CellEditEnding">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Код" Binding="{Binding Id}" Width="Auto"/>
-                <DataGridTextColumn Header="Название расчета" Binding="{Binding Title}" Width="1*"/>
+                <DataGridTextColumn Header="Код" Binding="{Binding Id}" Width="Auto" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Название расчета" Binding="{Binding Title}" Width="1*" IsReadOnly="False"/>
             </DataGrid.Columns>
             
             

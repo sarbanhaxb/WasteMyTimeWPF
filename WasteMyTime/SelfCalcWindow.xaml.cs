@@ -19,9 +19,30 @@ namespace WasteMyTime
     /// </summary>
     public partial class SelfCalcWindow : Window
     {
-        public SelfCalcWindow(int calcOptionId)
+        public int CalcOptionId;
+        public SelfCalcWindow(int calcOptionId, string title)
         {
             InitializeComponent();
+            this.Title = $"Вариант расчета: {title}";
+            var WasteItems = SQLquery.LoadWaste("database.db", calcOptionId);
+
+            WasteDataGrid.ItemsSource = WasteItems;
+
+            foreach (var WasteItem in WasteItems)
+            {
+                Console.WriteLine(WasteItem.Title);
+            }
+
+            CalcOptionId = calcOptionId;
+        }
+
+        private void ShowBDO_Click(object sender, RoutedEventArgs e)
+        {
+            WindowBDOw windowBDO = new WindowBDOw(CalcOptionId);
+            windowBDO.ShowDialog();
+
+            WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
+
         }
     }
 }

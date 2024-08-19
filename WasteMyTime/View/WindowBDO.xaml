@@ -6,15 +6,19 @@
         xmlns:local="clr-namespace:WasteMyTime"
         xmlns:vm="clr-namespace:WasteMyTime.ViewModel"
         mc:Ignorable="d"
-        Title="WindowBDO" Height="800" Width="Auto" ResizeMode="CanResizeWithGrip" WindowState="Maximized"
+        Title="WindowBDO" Height="800" Width="1000" ResizeMode="CanResizeWithGrip" WindowState="Maximized"
         >
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
-        
+        <Style TargetType="{x:Type TextBlock}" x:Key="WrapText">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
     </Window.Resources>
+
 
 
     <Grid>
@@ -23,9 +27,25 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0" Margin="10" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" 
-                 />
+        <TextBox Grid.Row="0" Margin="10" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding BDOItemsView}" AutoGenerateColumns="True"/>
+        <DataGrid x:Name="BDODataGrid" Grid.Row="1" ItemsSource="{Binding BDOItemsView}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Код ФККО" Binding="{Binding Path=Title}" Width="3*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Path=Number}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Происхождение (Производство)" Binding="{Binding Path=OriginManufacturing}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Происхождение (Исходная продукция (товар)" Binding="{Binding Path=OriginProducts}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Происхождение (Процесс))" Binding="{Binding Path=OriginProcess}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Состав (Наименование компонентов))" Binding="{Binding Path=Compound}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Состав (Содержание, % масс. (минимум)" Binding="{Binding Path=CompoundPercentMin}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Состав (Содержание, % масс. (максимум)" Binding="{Binding Path=CompoundPercentMax}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Примечание о компонентном составе" Binding="{Binding Path=CompoundNotice}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Примечание к виду отхода" Binding="{Binding Path=WasteNotice}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Агрегатное состояние и физическая форма" Binding="{Binding Path=PhysicalState}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Класс опасности" Binding="{Binding Path=HazardClass}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Критерии отнесения" Binding="{Binding Path=AttributionCriteria}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+                <DataGridTextColumn Header="Документ (основание)" Binding="{Binding Path=Doc}" Width="1*" IsReadOnly="False" ElementStyle="{StaticResource WrapText}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

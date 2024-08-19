@@ -8,7 +8,12 @@
         mc:Ignorable="d"
         Title="Эколог-Отходы" 
         Height="700" 
-        Width="800">
+        Width="800"
+        MinHeight="700"
+        MinWidth="800"
+        MaxHeight="1000"
+        MaxWidth="1100"
+        >
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#FF909090" Offset="0.0"/>

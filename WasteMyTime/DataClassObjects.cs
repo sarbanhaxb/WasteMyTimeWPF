@@ -118,10 +118,11 @@ namespace WasteMyTime
 
     public class Waste
     {
+        public int Id { get; set; }
+        public int calcOption_id { get; set; }
         public string FKKOcode { get; set; }
         public string Title { get; set; }
         public double Normative { get; set; }
-        public bool MethodCheck { get; set; }
     
         public Waste() { }
     }
