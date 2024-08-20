@@ -59,11 +59,29 @@ namespace WasteMyTime
                 command.CommandText = "CREATE TABLE IF NOT EXISTS WasteItems" +
                     "(id INTEGER PRIMARY KEY, " +
                     "calcOption_id INTEGER, " +
-                    "FKKOcode VARCHAR(100) NOT NULL UNIQUE, " +
+                    "FKKOcode VARCHAR(100) NOT NULL, " +
                     "Title VARCHAR(100) NOT NULL, " +
-                    "Normative REAL DEFAULT 0, " +
+                    "Normative VARCHAR(10) DEFAULT '0', " +
                     "FOREIGN KEY (calcOption_id) REFERENCES CalcsOption(id) ON DELETE CASCADE)";
                 command.ExecuteNonQuery();
+            }
+        }
+
+        public static void UpdateNormative(string Dataname, int id, string n)
+        {
+            string sqlExpression = $"UPDATE WasteItems SET Normative='{n}' WHERE id={id}";
+            using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (System.Data.SQLite.SQLiteException ex)
+                {
+                    MessageBox.Show($"Ошибка изменения наименования: {ex.Message}", "Ошибка базы данных", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -110,7 +128,8 @@ namespace WasteMyTime
                         item.calcOption_id = Convert.ToInt32(reader["calcOption_id"]);
                         item.FKKOcode = (string)reader["FKKOcode"];
                         item.Title = (string)reader["Title"];
-                        item.Normative = Convert.ToDouble(reader["Normative"]);
+                        string x = (string)reader["Normative"];
+                        item.Normative = Convert.ToDouble(x.Replace('.', ','));
                         itemSource.Add(item);
                     }
                 }
@@ -124,9 +143,10 @@ namespace WasteMyTime
             using (var connections = new SQLiteConnection($"Data Source={Dataname}"))
             {
                 connections.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connections);
+
                 try
                 {
-                    SQLiteCommand command = new SQLiteCommand(sqlExpression, connections);
                     command.ExecuteNonQuery();
                 }
                 catch (SQLiteException ex)
@@ -152,6 +172,24 @@ namespace WasteMyTime
                 {
                     MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
+            }
+        }
+
+        public static void DeleteWaste(string Dataname, int wasteId)
+        {
+            try
+            {
+                using (var connection = new SQLiteConnection($"Data Source={Dataname}; foreign_keys = ON;"))
+                {
+                    connection.Open();
+                    var command = new SQLiteCommand("DELETE FROM WasteItems WHERE id = @id", connection);
+                    command.Parameters.AddWithValue("@id", wasteId);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (SQLiteException ex)
+            {
+                MessageBox.Show("Ошибка при выполнении операции.", $"{ex.Message}", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
             }
         }
 

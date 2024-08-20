@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<Grid xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Grid.Resources>
+        <ResourceDictionary/>
+    </Grid.Resources>
+    <Viewbox Stretch="Uniform" Name="_____1">
+        <Canvas UseLayoutRounding="False" Width="32.0" Height="32.0">
+            <Canvas.Clip>
+                <RectangleGeometry Rect="0.0,0.0,32.0,32.0"/>
+            </Canvas.Clip>
+            <Canvas UseLayoutRounding="False" RenderTransform="1.8960663,0.0,0.0,1.7777778,-8.5931978,-5.3333333">
+                <Canvas UseLayoutRounding="False">
+                    <Path Fill="#ff000000">
+                        <Path.Data>
+                            <PathGeometry Figures="M 17 21 H 9 C 7.346 21 6 19.654 6 18 V 6 C 6 4.346 7.346 3 9 3 h 8 c 1.654 0 3 1.346 3 3 v 12 c 0 1.654 -1.346 3 -3 3 z M 9 5 C 8.449 5 8 5.449 8 6 v 12 c 0 0.551 0.449 1 1 1 h 8 c 0.551 0 1 -0.449 1 -1 V 6 C 18 5.449 17.551 5 17 5 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="9.0" Canvas.Top="10.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="12.0" Canvas.Top="10.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="15.0" Canvas.Top="10.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="9.0" Canvas.Top="13.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="12.0" Canvas.Top="13.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="15.0" Canvas.Top="13.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="9.0" Canvas.Top="16.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="12.0" Canvas.Top="16.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Ellipse Canvas.Left="15.0" Canvas.Top="16.0" Width="2.0" Height="2.0" Fill="#ff000000"/>
+                </Canvas>
+                <Canvas UseLayoutRounding="False">
+                    <Path Fill="#ff000000">
+                        <Path.Data>
+                            <PathGeometry Figures="M 16 7 V 8 H 10 V 7 h 6 M 17 6 H 16 H 10 H 9 v 1 v 1 v 1 h 1 h 6 h 1 V 8 V 7 Z" FillRule="Nonzero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Viewbox>
+</Grid>

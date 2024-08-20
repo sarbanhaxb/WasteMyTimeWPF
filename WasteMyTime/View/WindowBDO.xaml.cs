@@ -41,7 +41,7 @@ namespace WasteMyTime
             parId = Id;
             ContextMenu contextMenu = new ContextMenu();
             MenuItem menuItem = new MenuItem();
-            menuItem.Header = "Выбрать";
+            menuItem.Header = "Добавить";
             menuItem.Click += MenuAddWasteClick;
 
             contextMenu.Items.Add(menuItem);
@@ -50,8 +50,6 @@ namespace WasteMyTime
 
         private void MenuAddWasteClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(":asdsad");
-            Console.WriteLine(BDODataGrid.SelectedItem.ToString());
             if (BDODataGrid.SelectedItem is BDOItem bdoItem)
             {
                 SQLquery.AddWasteToCalcOption("database.db", parId, bdoItem.Number, bdoItem.Title, 0);

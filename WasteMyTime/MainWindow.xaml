@@ -95,8 +95,6 @@
 
         <UniformGrid Grid.Row="2" Rows="1" Columns="3">
             <Button x:Name="MainWindowsAddCityButton" VerticalAlignment="Center" Height="50" Width="50" Click="MainWindowsAddCityButton_Click" Cursor="Hand" ToolTip="Добавить">
-                
-                
                 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
                     <Canvas Name="svg13" Width="24" Height="24">
                         <Canvas.RenderTransform>
