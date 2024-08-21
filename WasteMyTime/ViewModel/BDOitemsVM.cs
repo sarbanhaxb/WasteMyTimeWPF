@@ -19,7 +19,6 @@ namespace WasteMyTime.ViewModel
         public MainViewModel()
         {
             BDOItems = SQLquery.LoadBDO();
-  
 
             BDOItemsView = CollectionViewSource.GetDefaultView(BDOItems);
             BDOItemsView.Filter = FilterBDOItems;

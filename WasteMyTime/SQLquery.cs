@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Threading;
 using System.Data.Entity;
 using System.Windows.Documents;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
 namespace WasteMyTime
 {
@@ -108,6 +109,39 @@ namespace WasteMyTime
 
             }
             return itemSource;
+        }
+
+        public static BDOItem getBDOItem(string Dataname, string FKKOcode)
+        {
+            var item = new BDOItem();
+            string sqlExpression = $"SELECT * FROM bdo WHERE num='{FKKOcode}'";
+
+            using (var conn = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                conn.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, conn);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        item.Number = Convert.ToString(reader["num"]);
+                        item.Title = Convert.ToString(reader["title"]);
+                        item.OriginManufacturing = Convert.ToString(reader["originManufacturing"]);
+                        item.OriginProducts = Convert.ToString(reader["originProducts"]);
+                        item.OriginProcess = Convert.ToString(reader["originProcess"]);
+                        item.Compound = Convert.ToString(reader["compound"]);
+                        item.CompoundPercentMin = Convert.ToDouble(reader["compoundPercentMin"]);
+                        item.CompoundPercentMax = Convert.ToDouble(reader["compoundPercentMax"]);
+                        item.CompoundNotice = Convert.ToString(reader["compoundNotice"]);
+                        item.WasteNotice = Convert.ToString(reader["wasteNotice"]);
+                        item.PhysicalState = Convert.ToString(reader["physicalState"]);
+                        item.HazardClass = Convert.ToString(reader["hazardClass"]);
+                        item.AttributionCriteria = Convert.ToString(reader["attributionCriteria"]);
+                        item.Doc = Convert.ToString(reader["docs"]);
+                    }
+                }
+            }
+            return item;
         }
 
         public static ObservableCollection<Waste> LoadWaste(string Dataname, int CalcsOption)

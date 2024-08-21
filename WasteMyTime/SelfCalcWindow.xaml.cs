@@ -12,6 +12,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
+using Microsoft.Win32;
+using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
+using TableRow = DocumentFormat.OpenXml.Wordprocessing.TableRow;
+using TableCell = DocumentFormat.OpenXml.Wordprocessing.TableCell;
+using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
+using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using System.IO;
+using DocumentFormat.OpenXml.Office2013.Word;
 
 namespace WasteMyTime
 {
@@ -81,7 +93,7 @@ namespace WasteMyTime
                     Duration.HorizontalAlignment = HorizontalAlignment.Left;
                     Duration.Text = "0";
                     Label DurationLabel = new Label();
-                    DurationLabel.Content = "Продолжительность, дни";
+                    DurationLabel.Content = "Количество смен";
                     DurationLabel.HorizontalAlignment = HorizontalAlignment.Left;
                     //остаток нефтепродукта
                     TextBox Remainder = new TextBox();
@@ -119,7 +131,7 @@ namespace WasteMyTime
                         int DurationD = Convert.ToInt32(Duration.Text);
                         double ReminderD = Convert.ToDouble(Remainder.Text);
 
-                        double nN = Math.Round(CountOfWorkersD * NormativeD * DurationD / 1000 * (ReminderD/100+1), 3);
+                        double nN = Math.Round(CountOfWorkersD * NormativeD * DurationD / 1000 * (ReminderD / 100 + 1), 3);
                         string nNs = Convert.ToString(nN);
                         SQLquery.UpdateNormative("database.db", waste.Id, nNs);
                         WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
@@ -152,7 +164,7 @@ namespace WasteMyTime
                     Duration.HorizontalAlignment = HorizontalAlignment.Left;
                     Duration.Text = "0";
                     Label DurationLabel = new Label();
-                    DurationLabel.Content = "Продолжительность, дни";
+                    DurationLabel.Content = "Количество смен";
                     DurationLabel.HorizontalAlignment = HorizontalAlignment.Left;
                     //остаток нефтепродукта
                     TextBox Remainder = new TextBox();
@@ -307,10 +319,65 @@ namespace WasteMyTime
                         WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
                     }
                 }
+                else if (waste.Title.StartsWith("смет с территории") || waste.FKKOcode.StartsWith("7 33 39"))
+                {
+                    CalcPanel.Children.Clear();
+
+                    //смет с территории
+                    Label SquareLabel = new Label();
+                    SquareLabel.Content = "Площадь убираемой территории, кв.м.";
+                    SquareLabel.HorizontalAlignment = HorizontalAlignment.Left;
+                    TextBox Square = new TextBox();
+                    Square.HorizontalAlignment = HorizontalAlignment.Left;
+                    Square.Text = "0";
+                    Square.Width = 50;
+
+                    TextBox Normative = new TextBox();
+                    Normative.Width = 50;
+                    Normative.HorizontalAlignment = HorizontalAlignment.Left;
+                    Normative.Text = "5";
+                    Label NormativeLabel = new Label();
+                    NormativeLabel.Content = "Удельный норматив, образования отхода, кг/кв.м.";
+                    NormativeLabel.HorizontalAlignment = HorizontalAlignment.Left;
+
+                    Button Calc = new Button();
+                    Calc.Width = 75;
+                    Calc.Height = 20;
+                    Calc.Content = "Рассчитать";
+                    Calc.HorizontalAlignment = HorizontalAlignment.Left;
+
+                    CalcPanel.Children.Add(SquareLabel);
+                    CalcPanel.Children.Add(Square);
+                    CalcPanel.Children.Add(NormativeLabel);
+                    CalcPanel.Children.Add(Normative);
+                    CalcPanel.Children.Add(new Label());
+                    CalcPanel.Children.Add(Calc);
+
+                    Calc.Click += CalcWaste_Click;
+
+                    void CalcWaste_Click(object sender1, RoutedEventArgs e1)
+                    {
+                        double SquareD = Convert.ToDouble(Square.Text);
+                        double NormativeD = Convert.ToDouble(Normative.Text);
+
+                        double nN = Math.Round(SquareD * NormativeD / 1000 , 3);
+                        string nNs = Convert.ToString(nN);
+
+                        SQLquery.UpdateNormative("database.db", waste.Id, nNs);
+                        WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
+                    }
+
+                }
 
                 else
                 {
                     CalcPanel.Children.Clear();
+                    Label label = new Label();
+                    label.Content = "Методика отсутствует";
+                    label.HorizontalAlignment = HorizontalAlignment.Center;
+                    label.VerticalAlignment = VerticalAlignment.Center;
+
+                    CalcPanel.Children.Add(label);
                 }
             }
         }
@@ -328,6 +395,177 @@ namespace WasteMyTime
                 SQLquery.UpdateNormative("database.db", p.Id, res.Text);
             }
             catch { }
+        }
+
+        private void CalcWaste_Click(object sender, RoutedEventArgs e)
+        {
+            Dictionary<BDOItem, double> list = new Dictionary<BDOItem, double>();
+            foreach (var dr in WasteDataGrid.ItemsSource)
+            {
+                if (dr is Waste waste)
+                {
+                    list.Add(SQLquery.getBDOItem("BDO.db", waste.FKKOcode), waste.Normative);
+                }
+            }
+
+            string fileName = "ex.docx";
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = "*.docx";
+            saveFileDialog.Filter = "Microsoft Word document (.docx)|*.docx";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                fileName = saveFileDialog.FileName;
+            }
+            
+
+            using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document))
+            {
+                MainDocumentPart mainPart = document.AddMainDocumentPart();
+                mainPart.Document = new Document();
+                Body docBody = new Body();
+                //var doc = document.MainDocumentPart.Document;
+                Table table = new Table();
+
+                TableProperties tableProperties = new TableProperties
+                    (
+                    new TableBorders
+                        (
+                        new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 11 },
+                        new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 11 },
+                        new LeftBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 11 },
+                        new RightBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 11 },
+                        new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 11 },
+                        new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 11 }
+                        )
+                     );
+                table.AppendChild<TableProperties>(tableProperties);
+
+                for (int i = 0; i < 1; i++) 
+                {
+                    var tr = new TableRow();
+                    var tc = new TableCell();
+                    tc.Append(new Paragraph(new Run(new Text("Наименование\r\nотхода\r\n"))));
+                    tc.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc);
+
+                    var tc1 = new TableCell();
+                    tc1.Append(new Paragraph(new Run(new Text("Код по ФККО"))));
+                    tc1.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc1);
+
+                    var tc2 = new TableCell();
+                    tc2.Append(new Paragraph(new Run(new Text("Класс опасности по\r\nПриказу МПР №242\r\n от 22.05.2017\r\n"))));
+                    tc2.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc2);
+
+
+                    var tc3 = new TableCell();
+                    tc3.Append(new Paragraph(new Run(new Text("Агрегатное состояние"))));
+                    tc3.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc3);
+
+                    var tc4 = new TableCell();
+                    tc4.Append(new Paragraph(new Run(new Text("Состав отхода"))));
+                    tc4.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc4);
+
+                    var tc5 = new TableCell();
+                    tc5.Append(new Paragraph(new Run(new Text("Норматив \r\nобразования отходов, \r\nт/период\r\n"))));
+                    tc5.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc5);
+
+                    var tc6 = new TableCell();
+                    tc6.Append(new Paragraph(new Run(new Text("Срок накопления отходов"))));
+                    tc6.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc6);
+
+                    var tc7 = new TableCell();
+                    tc7.Append(new Paragraph(new Run(new Text("Порядок обращения с\r\nотходом"))));
+                    tc7.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc7);
+
+                    var tc8 = new TableCell();
+                    tc8.Append(new Paragraph(new Run(new Text("Место накопления "))));
+                    tc8.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc8);
+
+                    var tc9 = new TableCell();
+                    tc9.Append(new Paragraph(new Run(new Text("Возможный контрагент (вид обращения)"))));
+                    tc9.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc9);
+
+                    table.Append(tr);
+                }
+
+                foreach (var item in list)
+                {
+                    var tr = new TableRow();
+                    var tc = new TableCell();
+                    tc.Append(new Paragraph(new Run(new Text(item.Key.Title))));
+                    tc.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc);
+
+                    var tc1 = new TableCell();
+                    tc1.Append(new Paragraph(new Run(new Text(item.Key.Number))));
+                    tc1.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc1);
+
+                    var tc2 = new TableCell();
+                    tc2.Append(new Paragraph(new Run(new Text(item.Key.HazardClass))));
+                    tc2.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc2);
+
+
+                    var tc3 = new TableCell();
+                    tc3.Append(new Paragraph(new Run(new Text(item.Key.PhysicalState))));
+                    tc3.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc3);
+
+                    var tc4 = new TableCell();
+                    tc4.Append(new Paragraph(new Run(new Text(item.Key.Compound))));
+                    tc4.Append(new Paragraph(new Run(new Text(item.Key.CompoundNotice))));
+                    tc4.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc4);
+
+                    var tc5 = new TableCell();
+                    tc5.Append(new Paragraph(new Run(new Text(Convert.ToString(item.Value)))));
+                    tc5.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc5);
+
+                    var tc6 = new TableCell();
+                    tc6.Append(new Paragraph(new Run(new Text("Не более 11 месяцев"))));
+                    tc6.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc6);
+
+                    var tc7 = new TableCell();
+                    tc7.Append(new Paragraph(new Run(new Text("Обработка/\nобезвреживание/\nутилизация/\nразмещение"))));
+                    tc7.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc7);
+
+                    var tc8 = new TableCell();
+                    tc8.Append(new Paragraph(new Run(new Text("Контейнер\nс закрывающейся крышкой"))));
+                    tc8.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc8);
+
+                    var tc9 = new TableCell();
+                    tc9.Append(new Paragraph(new Run(new Text("ООО РОГА И КОПЫТА"))));
+                    tc9.Append(new TableCellProperties(new TableCellWidth { Type = TableWidthUnitValues.Auto }));
+                    tr.Append(tc9);
+
+                    table.Append(tr);
+
+                }
+
+                docBody.Append(table);
+                mainPart.Document.Append(docBody);
+                mainPart.Document.Save();
+            }
+
+
+
+
+
         }
     }
 }
