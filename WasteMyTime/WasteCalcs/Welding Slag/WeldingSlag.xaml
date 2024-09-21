@@ -1,0 +1,83 @@
+﻿<Window x:Class="WasteMyTime.WasteCalcs.WeldingSlag"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WasteMyTime.WasteCalcs"
+        mc:Ignorable="d"
+        Title="Шлак сварочный" Height="400" Width="600" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="False" Name="dataGrid1" Margin="5" Grid.Row="1" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Марка электрода" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ElectrodeBrand}" Margin="3 3 3 3"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Масса электродов, т" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Quantity}" Margin="3 3 3 3"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Норматив" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox Text="{Binding Normative}" Margin="3 3 3 3" Width="100" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Масса шлака, т" Width="1*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Mass}" Margin="3 3 3 3"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Height="23" HorizontalAlignment="Left" Name="AddNewRow" Click="AddNewRow_Click" VerticalAlignment="Center" Width="125" Grid.Row="2" Margin="5">
+            Добавить позицию
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Height="23" HorizontalAlignment="Left" x:Name="DelRow" VerticalAlignment="Center" Width="125" Content="Удалить позицию" Click="DelRow_Click" Grid.Row="2" Margin="135 5 5 5">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+
+        <Menu x:Name="MainMenu" Width="Auto" Grid.Row="0">
+            <MenuItem Header="Настройки программы" Click="MenuItem_Click" VerticalAlignment="Stretch"/>
+            <MenuItem Header="О программе" Click="AboutMethodClick"/>
+        </Menu>
+    </Grid>
+    <Window.Resources>
+        <Style TargetType="Border">
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+    </Window.Resources>
+</Window>

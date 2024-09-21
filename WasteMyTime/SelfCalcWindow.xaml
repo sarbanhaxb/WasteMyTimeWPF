@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WasteMyTime"
         mc:Ignorable="d"
-        Height="450" Width="1000">
+        Height="450" Width="1000"
+        Icon="Images\icons\waste.ico"
+>
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="WrapText">
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -49,7 +51,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -181,13 +183,13 @@
             </Viewbox>
         </Button>
 
-        <DataGrid x:Name="WasteDataGrid" Grid.Row="1" CanUserAddRows="False" IsReadOnly="False" Margin="5 0" Padding="5 0" AutoGenerateColumns="False" SelectedCellsChanged="WasteDataGrid_SelectedCellsChanged" CellEditEnding="WasteDataGrid_CellEditEnding">
+        <DataGrid x:Name="WasteDataGrid" Grid.Row="1" CanUserAddRows="False" IsReadOnly="False" Margin="5 0" Padding="5 0" AutoGenerateColumns="False" MouseDoubleClick="WasteDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Код ФККО" Width="1.4*" Binding="{Binding Path=FKKOcode}" ElementStyle="{StaticResource WrapText}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Наименование отхода" Width="5.8*" Binding="{Binding Path=Title}" ElementStyle="{StaticResource WrapText}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Норматив образования" Width="2*" Binding="{Binding Path=Normative}" IsReadOnly="False"/>
             </DataGrid.Columns>
-            
+
         </DataGrid>
         <StackPanel x:Name="CalcPanel" Grid.Column="1" Grid.Row="1"/>
 

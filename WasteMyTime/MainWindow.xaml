@@ -13,6 +13,7 @@
         MinWidth="800"
         MaxHeight="1000"
         MaxWidth="1100"
+        Icon="Images\icons\waste.ico"
         >
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -79,16 +80,16 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-            <MenuItem VerticalAlignment="Center" VerticalContentAlignment="Center" Header="Настройки" Height="27">
+            <MenuItem Header="Справочник">
+                <MenuItem x:Name="ShowBDOMenu" Header="Просмотр БДО" Click="ShowBDOMenu_Click" />
+                <MenuItem Header="Просмотр ФККО" Visibility="Hidden"/>
+            </MenuItem>
+            <MenuItem Header="Справка" Visibility="Hidden">
+                <MenuItem Header="О программе" />
+            </MenuItem>
+            <MenuItem VerticalAlignment="Center" VerticalContentAlignment="Center" Header="Настройки" Height="27" Visibility="Hidden">
                 <MenuItem Header="Параметры программы"/>
                 <MenuItem Header="Расположение базы данных" />
-            </MenuItem>
-            <MenuItem Header="Справочник">
-                <MenuItem Header="Просмотр ФККО" />
-                <MenuItem x:Name="ShowBDOMenu" Header="Просмотр БДО" Click="ShowBDOMenu_Click" />
-            </MenuItem>
-            <MenuItem Header="Справка">
-                <MenuItem Header="О программе" />
             </MenuItem>
         </Menu>
         <Image Source="Images/fon.jpg" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Stretch="Fill" IsEnabled="False"/>
@@ -284,6 +285,7 @@
                      VerticalAlignment="Center" 
                      VerticalContentAlignment="Center"
                      FontSize="14"
+                     IsEnabled="False"
                      />
             <Label Grid.Column="1" 
                    Content="Название объекта" 
@@ -301,6 +303,7 @@
                      TextWrapping="Wrap" 
                      VerticalAlignment="Center"
                      FontSize="14"
+                     IsEnabled="False"
                      />
             <Button x:Name="SaveButton" Grid.Column="2" 
                     HorizontalAlignment="Right" Grid.Row="5" 

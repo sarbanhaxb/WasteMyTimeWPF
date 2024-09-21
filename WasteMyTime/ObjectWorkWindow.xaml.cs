@@ -92,5 +92,30 @@ namespace WasteMyTime
             }
             catch { }
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var addnewcalc = new AddNewCalcOptionWindow(CurrentObj.Id);
+            addnewcalc.ShowDialog();
+            this.RefreshDG();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (MainDataGrid.SelectedItem != null && MainDataGrid.SelectedItem is CalcOption calcOption)
+            {
+                var result = MessageBox.Show("Точно хотите удалить расчет?\nУдалятся все данные", "Удаление расчета", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SQLquery.DelCalcOption("database.db", calcOption.Id);
+                    this.RefreshDG();
+                }
+            }
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

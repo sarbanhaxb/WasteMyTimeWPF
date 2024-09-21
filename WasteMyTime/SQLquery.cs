@@ -251,7 +251,7 @@ namespace WasteMyTime
             var ItemsSource = new ObservableCollection<BDOItem>();
             string sqlExpression = $"SELECT * FROM bdo";
 
-            using (var connection = new SQLiteConnection($"Data Source=C:/Users/sarba/Desktop/C++/WasteMyTime/WasteMyTime/BDO.db"))
+            using (var connection = new SQLiteConnection($"Data Source=BDO.db"))
             {
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
@@ -547,6 +547,35 @@ namespace WasteMyTime
         {
             string sqlExpression = $"UPDATE CalcsOption SET title='{title}' WHERE id={id}";
             using (var connection = new SQLiteConnection($"Data Source={Dataname}"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (System.Data.SQLite.SQLiteException ex)
+                {
+                    MessageBox.Show($"Ошибка изменения наименования: {ex.Message}", "Ошибка базы данных", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        public static string GetNormative(string title)
+        {
+            string sqlExpression = $"SELECT Normative FROM CalcProperty WHERE Title='{title}'";
+            using (var connection = new SQLiteConnection("Data Source=CalcProperty.db"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand( sqlExpression, connection);
+                return Convert.ToString(command.ExecuteScalar());
+            }
+        }
+
+        public static void SetNormative(string Normative, string Title)
+        {
+            string sqlExpression = $"UPDATE CalcProperty SET Normative='{Normative}' WHERE Title='{Title}'";
+            using (var connection = new SQLiteConnection($"Data Source=CalcProperty.db"))
             {
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);

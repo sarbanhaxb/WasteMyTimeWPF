@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WasteMyTime"
         mc:Ignorable="d"
-        Title="ObjectWorkWindow" Height="600" Width="800">
+        Title="ObjectWorkWindow" Height="600" Width="800"
+        Icon="Images\icons\waste.ico"
+        >
     <!--<Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#FF909090" Offset="0.0"/>
@@ -159,15 +161,14 @@
         
         <Menu Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <MenuItem VerticalAlignment="Center" VerticalContentAlignment="Center" Header="Данные" Height="27">
-                <MenuItem Header="Добавить"/>
-                <MenuItem Header="Удалить"/>
+                <MenuItem Header="Добавить" Click="MenuItem_Click" />
+                <MenuItem Header="Удалить" Click="MenuItem_Click_1"/>
             </MenuItem>
-            <MenuItem Header="Настройки">
-            </MenuItem>
-            <MenuItem Header="Справка">
-                <MenuItem Header="О программе" />
-            </MenuItem>
-            <MenuItem Header="Выход"/>
+            <MenuItem Header="Выход" Click="MenuItem_Click_2"/>
+            <MenuItem Header="О программе" Visibility="Hidden"/>
+            <MenuItem Header="Справка" Visibility="Hidden"/>
+            <MenuItem Header="Настройки" Visibility="Hidden"/>
+
         </Menu>
         <DataGrid x:Name="MainDataGrid" CanUserAddRows="False" Grid.Row="2" ItemsSource="{Binding CalcsOption}" AutoGenerateColumns="False" d:ItemsSource="{d:SampleData ItemCount=2}" Padding="5 0" Margin="5 0" MouseDoubleClick="MainDataGrid_MouseDoubleClick" CellEditEnding="MainDataGrid_CellEditEnding">
             <DataGrid.Columns>

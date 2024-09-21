@@ -24,6 +24,7 @@ using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using System.IO;
 using DocumentFormat.OpenXml.Office2013.Word;
+using WasteMyTime.WasteCalcs;
 
 namespace WasteMyTime
 {
@@ -62,325 +63,6 @@ namespace WasteMyTime
             }
         }
 
-        public void WasteDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            if (WasteDataGrid.SelectedItem != null && WasteDataGrid.SelectedItem is Waste waste)
-            {
-                //обтирочный материал менее 15%
-                if (waste.FKKOcode == "9 19 204 02 60 4")
-                {
-                    CalcPanel.Children.Clear();
-
-                    //персонал
-                    TextBox CountOfWorkers = new TextBox();
-                    Label CountOfWorkersLabel = new Label();
-                    CountOfWorkersLabel.Content = "Количество персонала, чел.";
-                    CountOfWorkersLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    CountOfWorkers.HorizontalAlignment = HorizontalAlignment.Left;
-                    CountOfWorkers.Width = 50;
-                    CountOfWorkers.Text = "0";
-                    //норматив
-                    TextBox Normative = new TextBox();
-                    Normative.Width = 50;
-                    Normative.HorizontalAlignment = HorizontalAlignment.Left;
-                    Normative.Text = "0,1";
-                    Label NormativeLabel = new Label();
-                    NormativeLabel.Content = "Норматив, кг/смена";
-                    NormativeLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    //продолжительность
-                    TextBox Duration = new TextBox();
-                    Duration.Width = 50;
-                    Duration.HorizontalAlignment = HorizontalAlignment.Left;
-                    Duration.Text = "0";
-                    Label DurationLabel = new Label();
-                    DurationLabel.Content = "Количество смен";
-                    DurationLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    //остаток нефтепродукта
-                    TextBox Remainder = new TextBox();
-                    Remainder.Width = 50;
-                    Remainder.HorizontalAlignment = HorizontalAlignment.Left;
-                    Remainder.Text = "14,999";
-                    Label RemainderLabel = new Label();
-                    RemainderLabel.Content = "Остаток нефтепродукта, %";
-                    RemainderLabel.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    Button Calc = new Button();
-                    Calc.Width = 75;
-                    Calc.Height = 20;
-                    Calc.Content = "Рассчитать";
-                    Calc.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    CalcPanel.Children.Add(CountOfWorkersLabel);
-                    CalcPanel.Children.Add(CountOfWorkers);
-                    CalcPanel.Children.Add(NormativeLabel);
-                    CalcPanel.Children.Add(Normative);
-                    CalcPanel.Children.Add(DurationLabel);
-                    CalcPanel.Children.Add(Duration);
-                    CalcPanel.Children.Add(RemainderLabel);
-                    CalcPanel.Children.Add(Remainder);
-                    CalcPanel.Children.Add(new Label());
-                    CalcPanel.Children.Add(Calc);
-
-
-                    Calc.Click += CalcWaste_Click;
-
-                    void CalcWaste_Click(object sender1, RoutedEventArgs e1)
-                    {
-                        int CountOfWorkersD = Convert.ToInt32(CountOfWorkers.Text);
-                        double NormativeD = Convert.ToDouble(Normative.Text);
-                        int DurationD = Convert.ToInt32(Duration.Text);
-                        double ReminderD = Convert.ToDouble(Remainder.Text);
-
-                        double nN = Math.Round(CountOfWorkersD * NormativeD * DurationD / 1000 * (ReminderD / 100 + 1), 3);
-                        string nNs = Convert.ToString(nN);
-                        SQLquery.UpdateNormative("database.db", waste.Id, nNs);
-                        WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
-                    }
-                }
-
-                else if (waste.FKKOcode == "9 19 204 01 60 3")
-                {
-                    CalcPanel.Children.Clear();
-
-                    //персонал
-                    TextBox CountOfWorkers = new TextBox();
-                    Label CountOfWorkersLabel = new Label();
-                    CountOfWorkersLabel.Content = "Количество персонала, чел.";
-                    CountOfWorkersLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    CountOfWorkers.HorizontalAlignment = HorizontalAlignment.Left;
-                    CountOfWorkers.Width = 50;
-                    CountOfWorkers.Text = "0";
-                    //норматив
-                    TextBox Normative = new TextBox();
-                    Normative.Width = 50;
-                    Normative.HorizontalAlignment = HorizontalAlignment.Left;
-                    Normative.Text = "0,1";
-                    Label NormativeLabel = new Label();
-                    NormativeLabel.Content = "Норматив, кг/смена";
-                    NormativeLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    //продолжительность
-                    TextBox Duration = new TextBox();
-                    Duration.Width = 50;
-                    Duration.HorizontalAlignment = HorizontalAlignment.Left;
-                    Duration.Text = "0";
-                    Label DurationLabel = new Label();
-                    DurationLabel.Content = "Количество смен";
-                    DurationLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    //остаток нефтепродукта
-                    TextBox Remainder = new TextBox();
-                    Remainder.Width = 50;
-                    Remainder.HorizontalAlignment = HorizontalAlignment.Left;
-                    Remainder.Text = "15";
-                    Label RemainderLabel = new Label();
-                    RemainderLabel.Content = "Остаток нефтепродукта, %";
-                    RemainderLabel.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    Button Calc = new Button();
-                    Calc.Width = 75;
-                    Calc.Height = 20;
-                    Calc.Content = "Рассчитать";
-                    Calc.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    CalcPanel.Children.Add(CountOfWorkersLabel);
-                    CalcPanel.Children.Add(CountOfWorkers);
-                    CalcPanel.Children.Add(NormativeLabel);
-                    CalcPanel.Children.Add(Normative);
-                    CalcPanel.Children.Add(DurationLabel);
-                    CalcPanel.Children.Add(Duration);
-                    CalcPanel.Children.Add(RemainderLabel);
-                    CalcPanel.Children.Add(Remainder);
-                    CalcPanel.Children.Add(new Label());
-                    CalcPanel.Children.Add(Calc);
-
-
-                    Calc.Click += CalcWaste_Click;
-
-                    void CalcWaste_Click(object sender1, RoutedEventArgs e1)
-                    {
-                        int CountOfWorkersD = Convert.ToInt32(CountOfWorkers.Text);
-                        double NormativeD = Convert.ToDouble(Normative.Text);
-                        int DurationD = Convert.ToInt32(Duration.Text);
-                        double ReminderD = Convert.ToDouble(Remainder.Text);
-
-                        double nN = Math.Round(CountOfWorkersD * NormativeD * DurationD / 1000 * (ReminderD / 100 + 1), 3);
-                        string nNs = Convert.ToString(nN);
-                        SQLquery.UpdateNormative("database.db", waste.Id, nNs);
-                        WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
-                    }
-                }
-
-                else if (waste.FKKOcode == "9 19 100 02 20 4" || waste.FKKOcode == "9 19 111 21 20 4" || waste.FKKOcode == "9 19 111 24 20 4")
-                {
-                    //шлак сварочный
-
-                    CalcPanel.Children.Clear();
-
-                    //Количество сварочных электродов
-                    TextBox Count = new TextBox();
-                    Label CountLabel = new Label();
-                    CountLabel.Content = "Количество сварочных электродов, тонн";
-                    CountLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    Count.HorizontalAlignment = HorizontalAlignment.Left;
-                    Count.Width = 50;
-                    Count.Text = "0";
-                    //норматив
-                    TextBox Normative = new TextBox();
-                    Normative.Width = 50;
-                    Normative.HorizontalAlignment = HorizontalAlignment.Left;
-                    Normative.Text = "10";
-                    Label NormativeLabel = new Label();
-                    NormativeLabel.Content = "Норматив образования шлака, %";
-                    NormativeLabel.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    Button Calc = new Button();
-                    Calc.Width = 75;
-                    Calc.Height = 20;
-                    Calc.Content = "Рассчитать";
-                    Calc.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    CalcPanel.Children.Add(CountLabel);
-                    CalcPanel.Children.Add(Count);
-                    CalcPanel.Children.Add(NormativeLabel);
-                    CalcPanel.Children.Add(Normative);
-                    CalcPanel.Children.Add(new Label());
-                    CalcPanel.Children.Add(Calc);
-
-                    Calc.Click += CalcWaste_Click;
-
-                    void CalcWaste_Click(object sender1, RoutedEventArgs e1)
-                    {
-                        double CountD = Convert.ToDouble(Count.Text);
-                        double NormativeD = Convert.ToDouble(Normative.Text);
-
-                        double nN = Math.Round(CountD * NormativeD / 100, 3);
-                        string nNs = Convert.ToString(nN);
-
-                        SQLquery.UpdateNormative("database.db", waste.Id, nNs);
-                        WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
-                    }
-                }
-
-                else if (waste.FKKOcode == "7 33 100 01 72 4")
-                {
-                    CalcPanel.Children.Clear();
-
-                    //Мусор бытовой
-                    TextBox People = new TextBox();
-                    People.Width = 50;
-                    People.HorizontalAlignment = HorizontalAlignment.Left;
-                    People.Text = "0";
-                    Label PeopleLabel = new Label();
-                    PeopleLabel.Content = "Количество людей, чел.";
-                    PeopleLabel.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    TextBox Normative = new TextBox();
-                    Normative.Width = 50;
-                    Normative.HorizontalAlignment = HorizontalAlignment.Left;
-                    Normative.Text = "0,04";
-                    Label NormativeLabel = new Label();
-                    NormativeLabel.Content = "Норматив образования на 1 человека в год";
-                    NormativeLabel.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    TextBox Duration = new TextBox();
-                    Duration.Width = 50;
-                    Duration.HorizontalAlignment = HorizontalAlignment.Left;
-                    Duration.Text = "0";
-                    Label DurationLabel = new Label();
-                    DurationLabel.Content = "Продолжительность образования, дней";
-                    DurationLabel.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    Button Calc = new Button();
-                    Calc.Width = 75;
-                    Calc.Height = 20;
-                    Calc.Content = "Рассчитать";
-                    Calc.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    CalcPanel.Children.Add(PeopleLabel);
-                    CalcPanel.Children.Add(People);
-                    CalcPanel.Children.Add(NormativeLabel);
-                    CalcPanel.Children.Add(Normative);
-                    CalcPanel.Children.Add(DurationLabel);
-                    CalcPanel.Children.Add(Duration);
-                    CalcPanel.Children.Add(new Label());
-                    CalcPanel.Children.Add(Calc);
-
-                    Calc.Click += CalcWaste_Click;
-
-                    void CalcWaste_Click(object sender1, RoutedEventArgs e1)
-                    {
-                        int PeopleD = Convert.ToInt32(People.Text);
-                        double NormativeD = Convert.ToDouble(Normative.Text);
-                        int DurationD = Convert.ToInt32(Duration.Text);
-
-                        double nN = Math.Round(PeopleD * NormativeD * DurationD / 365, 3);
-                        string nNs = Convert.ToString(nN);
-
-                        SQLquery.UpdateNormative("database.db", waste.Id, nNs);
-                        WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
-                    }
-                }
-                else if (waste.Title.StartsWith("смет с территории") || waste.FKKOcode.StartsWith("7 33 39"))
-                {
-                    CalcPanel.Children.Clear();
-
-                    //смет с территории
-                    Label SquareLabel = new Label();
-                    SquareLabel.Content = "Площадь убираемой территории, кв.м.";
-                    SquareLabel.HorizontalAlignment = HorizontalAlignment.Left;
-                    TextBox Square = new TextBox();
-                    Square.HorizontalAlignment = HorizontalAlignment.Left;
-                    Square.Text = "0";
-                    Square.Width = 50;
-
-                    TextBox Normative = new TextBox();
-                    Normative.Width = 50;
-                    Normative.HorizontalAlignment = HorizontalAlignment.Left;
-                    Normative.Text = "5";
-                    Label NormativeLabel = new Label();
-                    NormativeLabel.Content = "Удельный норматив, образования отхода, кг/кв.м.";
-                    NormativeLabel.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    Button Calc = new Button();
-                    Calc.Width = 75;
-                    Calc.Height = 20;
-                    Calc.Content = "Рассчитать";
-                    Calc.HorizontalAlignment = HorizontalAlignment.Left;
-
-                    CalcPanel.Children.Add(SquareLabel);
-                    CalcPanel.Children.Add(Square);
-                    CalcPanel.Children.Add(NormativeLabel);
-                    CalcPanel.Children.Add(Normative);
-                    CalcPanel.Children.Add(new Label());
-                    CalcPanel.Children.Add(Calc);
-
-                    Calc.Click += CalcWaste_Click;
-
-                    void CalcWaste_Click(object sender1, RoutedEventArgs e1)
-                    {
-                        double SquareD = Convert.ToDouble(Square.Text);
-                        double NormativeD = Convert.ToDouble(Normative.Text);
-
-                        double nN = Math.Round(SquareD * NormativeD / 1000 , 3);
-                        string nNs = Convert.ToString(nN);
-
-                        SQLquery.UpdateNormative("database.db", waste.Id, nNs);
-                        WasteDataGrid.ItemsSource = SQLquery.LoadWaste("database.db", CalcOptionId);
-                    }
-
-                }
-
-                else
-                {
-                    CalcPanel.Children.Clear();
-                    Label label = new Label();
-                    label.Content = "Методика отсутствует";
-                    label.HorizontalAlignment = HorizontalAlignment.Center;
-                    label.VerticalAlignment = VerticalAlignment.Center;
-
-                    CalcPanel.Children.Add(label);
-                }
-            }
-        }
 
         private void WasteDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
@@ -417,7 +99,7 @@ namespace WasteMyTime
             {
                 fileName = saveFileDialog.FileName;
             }
-            
+
 
             using (var document = WordprocessingDocument.Create(fileName, WordprocessingDocumentType.Document))
             {
@@ -441,7 +123,7 @@ namespace WasteMyTime
                      );
                 table.AppendChild<TableProperties>(tableProperties);
 
-                for (int i = 0; i < 1; i++) 
+                for (int i = 0; i < 1; i++)
                 {
                     var tr = new TableRow();
                     var tc = new TableCell();
@@ -566,6 +248,19 @@ namespace WasteMyTime
 
 
 
+        }
+
+        private void WasteDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (WasteDataGrid.SelectedItem != null && WasteDataGrid.SelectedItem is Waste waste)
+            {
+                if (waste.FKKOcode == "9 19 100 02 20 4" || waste.FKKOcode == "9 19 111 21 20 4" || waste.FKKOcode == "9 19 111 24 20 4")
+                {
+                    WeldingSlag weldingSlag = new WeldingSlag();
+                    weldingSlag.Owner = this;
+                    weldingSlag.ShowDialog();
+                }
+            }
         }
     }
 }

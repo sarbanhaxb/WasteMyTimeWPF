@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WasteMyTime"
         mc:Ignorable="d"
-        Title="AddObjectWindow" Height="150" Width="380"
+        Title="Новый объект" Height="150" Width="380"
         WindowStartupLocation="CenterScreen" 
         KeyDown="WindowObj_KeyDown">
     <Grid>
