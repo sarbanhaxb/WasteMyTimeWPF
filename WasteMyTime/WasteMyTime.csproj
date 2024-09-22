@@ -158,12 +158,6 @@
     <Compile Include="WasteCalcs\Welding Slag\WeldingSlag.xaml.cs">
       <DependentUpon>WeldingSlag.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WasteCalcs\Welding Slag\WeldingSlagProperty.xaml.cs">
-      <DependentUpon>WeldingSlagProperty.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WasteCalcs\WipingMaterial.xaml.cs">
-      <DependentUpon>WipingMaterial.xaml</DependentUpon>
-    </Compile>
     <Page Include="AboutBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -253,14 +247,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WasteCalcs\Welding Slag\WeldingSlag.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WasteCalcs\Welding Slag\WeldingSlagProperty.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WasteCalcs\WipingMaterial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

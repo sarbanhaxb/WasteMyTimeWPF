@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -14,8 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-using WasteMyTime.WasteCalcs.Welding_Slag;
 using static MaterialDesignThemes.Wpf.Theme;
+using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace WasteMyTime.WasteCalcs
 {
@@ -30,48 +31,18 @@ namespace WasteMyTime.WasteCalcs
 
         private void AddNewRow_Click(object sender, RoutedEventArgs e)
         {
-            ComboBoxItem comboBoxItem1 = new ComboBoxItem();
-            comboBoxItem1.Content = SQLquery.GetNormative("WeldingSlag");
-            ComboBoxItem comboBoxItem2 = new ComboBoxItem();
-            ComboBoxItem comboBoxItem3 = new ComboBoxItem();
-            ComboBoxItem comboBoxItem4 = new ComboBoxItem();
-            ComboBoxItem comboBoxItem5 = new ComboBoxItem();
+            double comboBoxItem1 = 0.08d;
+            double comboBoxItem2 = 0.09d;
+            double comboBoxItem3 = 0.10d;
+            double comboBoxItem4 = 0.11d;
+            double comboBoxItem5 = 0.12d;
 
-            switch (comboBoxItem1.Content)
-            {
-                case "0.08":
-                    comboBoxItem2.Content = "0.09";
-                    comboBoxItem3.Content = "0.10";
-                    comboBoxItem4.Content = "0.11";
-                    comboBoxItem5.Content = "0.12";
-                    break;
-                case "0.09":
-                    comboBoxItem2.Content = "0.08";
-                    comboBoxItem3.Content = "0.10";
-                    comboBoxItem4.Content = "0.11";
-                    comboBoxItem5.Content = "0.12";
-                    break;
-                case "0.10":
-                    comboBoxItem2.Content = "0.08";
-                    comboBoxItem3.Content = "0.09";
-                    comboBoxItem4.Content = "0.11";
-                    comboBoxItem5.Content = "0.12";
-                    break;
-                case "0.11":
-                    comboBoxItem2.Content = "0.08";
-                    comboBoxItem3.Content = "0.09";
-                    comboBoxItem4.Content = "0.10";
-                    comboBoxItem5.Content = "0.12";
-                    break;
-                case "0.12":
-                    comboBoxItem2.Content = "0.08";
-                    comboBoxItem3.Content = "0.09";
-                    comboBoxItem4.Content = "0.10";
-                    comboBoxItem5.Content = "0.11";
-                    break;
-            }
-
-            Weldings.Add(new RowWeldingSlag() {ElectrodeBrand="Электрод", Quantity=0, Normative=new List<ComboBoxItem>() {comboBoxItem1, comboBoxItem2, comboBoxItem3, comboBoxItem4, comboBoxItem5}, Mass=0 });
+            RowWeldingSlag rowWeldingSlag = new RowWeldingSlag();
+            rowWeldingSlag.ElectrodeBrand = "Электрод";
+            rowWeldingSlag.Quantity = "";
+            rowWeldingSlag.Normative = new ObservableCollection<double>() { comboBoxItem1, comboBoxItem2, comboBoxItem3, comboBoxItem4, comboBoxItem5};
+            rowWeldingSlag.Mass = 0;
+            Weldings.Add(rowWeldingSlag);
         }
 
         private void DelRow_Click(object sender, RoutedEventArgs e)
@@ -85,10 +56,51 @@ namespace WasteMyTime.WasteCalcs
             aboutBox.ShowDialog();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            WeldingSlagProperty weldingSlagProperty = new WeldingSlagProperty(this);
-            weldingSlagProperty.ShowDialog();
+            foreach (var item in Weldings)
+            {
+                Console.WriteLine(item.Mass);
+            }
+        }
+
+        private void dataGrid1_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (dataGrid1.SelectedItem != null && dataGrid1.SelectedItem is RowWeldingSlag item)
+            {
+                Console.WriteLine(item.Mass);
+                string Quantity = item.Quantity.ToString();
+                string Normative = item.SelectedNormative.ToString();
+                double QuantityD = double.Parse(Quantity, System.Globalization.CultureInfo.InvariantCulture); ;
+                double NormativeD = double.Parse(Normative, System.Globalization.CultureInfo.InvariantCulture);
+                item.Mass = QuantityD * NormativeD;
+            }
+
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+            {
+                if (comboBox.SelectedItem is double selectedItem)
+                {
+                    var currentItem = dataGrid1.SelectedItem as RowWeldingSlag;
+
+                    if (currentItem != null)
+                    {
+                        currentItem.SelectedNormative = selectedItem;
+                    }
+
+                    //ТУТ ЗАКОНЧИЛ
+                    string Quantity = currentItem.Quantity.ToString();
+                    double Normative = currentItem.SelectedNormative;
+                    double QuantityD = double.Parse(Quantity, System.Globalization.CultureInfo.InvariantCulture); ;
+                    currentItem.Mass = QuantityD * Normative;
+
+                }
+            }
+            
         }
     }
 
@@ -96,9 +108,58 @@ namespace WasteMyTime.WasteCalcs
 
     public class RowWeldingSlag
     {
-        public string ElectrodeBrand { get; set; }
-        public double Quantity { get; set; }
-        public List<ComboBoxItem> Normative { get; set; }
-        public double Mass { get; set; }
+        private string electrodeBrand;
+        private string quantity;
+        private double selectedNormative; // Добавьте это свойство
+        private double mass;
+
+        public string ElectrodeBrand
+        {
+            get => electrodeBrand;
+            set
+            {
+                electrodeBrand = value;
+                OnPropertyChanged(nameof(ElectrodeBrand));
+            }
+        }
+
+        public string Quantity
+        {
+            get => quantity;
+            set
+            {
+                quantity = value;
+                OnPropertyChanged(nameof(Quantity));
+            }
+        }
+
+        public double SelectedNormative // Новое свойство для хранения выбранного значения
+        {
+            get => selectedNormative;
+            set
+            {
+                selectedNormative = value;
+                OnPropertyChanged(nameof(SelectedNormative));
+            }
+        }
+
+        public double Mass
+        {
+            get => mass;
+            set
+            {
+                mass = value;
+                OnPropertyChanged(nameof(Mass));
+            }
+        }
+
+        public ObservableCollection<double> Normative { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

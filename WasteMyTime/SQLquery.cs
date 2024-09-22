@@ -63,6 +63,7 @@ namespace WasteMyTime
                     "FKKOcode VARCHAR(100) NOT NULL, " +
                     "Title VARCHAR(100) NOT NULL, " +
                     "Normative VARCHAR(10) DEFAULT '0', " +
+                    "InitialData VARCHAR(50), " +
                     "FOREIGN KEY (calcOption_id) REFERENCES CalcsOption(id) ON DELETE CASCADE)";
                 command.ExecuteNonQuery();
             }
