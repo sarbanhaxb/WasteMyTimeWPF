@@ -63,8 +63,17 @@ namespace WasteMyTime
                     "FKKOcode VARCHAR(100) NOT NULL, " +
                     "Title VARCHAR(100) NOT NULL, " +
                     "Normative VARCHAR(10) DEFAULT '0', " +
-                    "InitialData VARCHAR(50), " +
                     "FOREIGN KEY (calcOption_id) REFERENCES CalcsOption(id) ON DELETE CASCADE)";
+                command.ExecuteNonQuery();
+
+                command.CommandText = "CREATE TABLE IF NOT EXISTS WeldingData " +
+                    "(id INTEGER PRIMARY KEY, " +
+                    "WasteItemId INTEGER, " +
+                    "ElectrodeBrand VARCHAR(100), " +
+                    "ElectrodeMass REAL, " +
+                    "Normative REAL, " +
+                    "SlagMass REAL, " +
+                    "FOREIGN KEY (WasteItemId) REFERENCES WasteItems(id) ON DELETE CASCADE)";
                 command.ExecuteNonQuery();
             }
         }

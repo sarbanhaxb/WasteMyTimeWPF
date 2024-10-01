@@ -243,11 +243,6 @@ namespace WasteMyTime
                 mainPart.Document.Append(docBody);
                 mainPart.Document.Save();
             }
-
-
-
-
-
         }
 
         private void WasteDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -256,7 +251,7 @@ namespace WasteMyTime
             {
                 if (waste.FKKOcode == "9 19 100 02 20 4" || waste.FKKOcode == "9 19 111 21 20 4" || waste.FKKOcode == "9 19 111 24 20 4")
                 {
-                    WeldingSlag weldingSlag = new WeldingSlag();
+                    WeldingSlag weldingSlag = new WeldingSlag(waste.Id);
                     weldingSlag.Owner = this;
                     weldingSlag.ShowDialog();
                 }
