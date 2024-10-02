@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -23,16 +24,15 @@ using System.Xml.Linq;
 using static MaterialDesignThemes.Wpf.Theme;
 using ComboBox = System.Windows.Controls.ComboBox;
 
+
 namespace WasteMyTime.WasteCalcs
 {
-
-
     public class Welding : INotifyPropertyChanged
     {
         public int ID { get; set; }
         public int WasteItemId { get; set; }
         private string _electrodeBrand;
-        private double _electrodeMass;
+        private string _electrodeMass;
         private double _normative;
         private double _slagMass;
 
@@ -49,7 +49,7 @@ namespace WasteMyTime.WasteCalcs
             }
         }
 
-        public double ElectrodeMass
+        public string ElectrodeMass
         {
             get => _electrodeMass;
             set
@@ -125,7 +125,12 @@ namespace WasteMyTime.WasteCalcs
         private void UpdateDatabase(Welding updatedWelding)
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-            updatedWelding.SlagMass = Math.Round(updatedWelding.ElectrodeMass * updatedWelding.Normative, 3);
+            if (updatedWelding.ElectrodeMass.Contains(","))
+            {
+                updatedWelding.ElectrodeMass = updatedWelding.ElectrodeMass.Replace(",", ".");
+            }
+            updatedWelding.SlagMass = Math.Round(Convert.ToDouble(updatedWelding.ElectrodeMass) * updatedWelding.Normative, 3);
+
             string sqlExpression = $"UPDATE WeldingData SET ElectrodeBrand='{updatedWelding.ElectrodeBrand}', ElectrodeMass={updatedWelding.ElectrodeMass}, Normative={updatedWelding.Normative}, SlagMass={updatedWelding.SlagMass} WHERE id={updatedWelding.ID}";
             using (var connection = new SQLiteConnection($"Data Source=database.db"))
             {
@@ -135,14 +140,9 @@ namespace WasteMyTime.WasteCalcs
             }
         }
 
-        private void NumericValidation(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9.-]+"); // Разрешаем только цифры и точку
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
         private void LoadData()
         {
+            Console.WriteLine(WasteItemID);
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
@@ -152,7 +152,7 @@ namespace WasteMyTime.WasteCalcs
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT * FROM WeldingData";
+                string query = $"SELECT * FROM WeldingData WHERE WasteItemId={WasteItemID}";
                 SQLiteCommand command = new SQLiteCommand(query, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -162,7 +162,7 @@ namespace WasteMyTime.WasteCalcs
                         ID = Convert.ToInt32((reader["id"])),
                         WasteItemId = Convert.ToInt32((reader["WasteItemId"])),
                         ElectrodeBrand = reader["ElectrodeBrand"].ToString(),
-                        ElectrodeMass = double.Parse(reader["ElectrodeMass"].ToString()),
+                        ElectrodeMass = reader["ElectrodeMass"].ToString(),
                         Normative = double.Parse(reader["Normative"].ToString()),
                         SlagMass = double.Parse(reader["SlagMass"].ToString())
                     });
@@ -176,7 +176,7 @@ namespace WasteMyTime.WasteCalcs
             {
                 WasteItemId = WasteItemID,
                 ElectrodeBrand = "Новая марка",
-                ElectrodeMass = 0,
+                ElectrodeMass = "0",
                 Normative = 0.10d,
                 SlagMass = 0
             };

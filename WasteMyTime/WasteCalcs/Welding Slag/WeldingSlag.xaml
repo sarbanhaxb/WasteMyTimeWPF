@@ -2,8 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="Welding Application" Height="450" Width="800"
-        Icon="WeldingSlag.png">    
+        xmlns:local="WasteMyTime.WasteCalcs"
+        Title="Расчет образования шлака сварочного" Height="300" Width="450"
+        MaxHeight="500" MaxWidth="450"
+        MinWidth="400"
+        MinHeight="200"
+        Icon="WeldingSlag.png"
+        WindowStartupLocation="CenterOwner"
+        >
     <Window.Resources>
         <x:Array x:Key="NormativeValues" Type="{x:Type sys:Double}">
             <sys:Double>0.08</sys:Double>
