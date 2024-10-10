@@ -161,6 +161,7 @@
     <Compile Include="AddNewCalcOptionWindow.xaml.cs">
       <DependentUpon>AddNewCalcOptionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WasteCalcs\Printout.cs" />
     <Compile Include="WasteCalcs\Welding Slag\WeldingSlag.xaml.cs">
       <DependentUpon>WeldingSlag.xaml</DependentUpon>
     </Compile>

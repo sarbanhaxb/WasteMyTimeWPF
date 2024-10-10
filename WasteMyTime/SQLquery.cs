@@ -599,5 +599,26 @@ namespace WasteMyTime
                 }
             }
         }
+        public static List<string> GetWasteForPrint(int WasteID)
+        {
+            List<string> list = new List<string>();
+            string sqlExpression = $"SELECT FKKOcode, Title FROM WasteItems WHERE id={WasteID}";
+
+            using (var connection = new SQLiteConnection($"Data Source=database.db"))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(sqlExpression, connection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        list.Add(Convert.ToString(reader["FKKOcode"]));
+                        list.Add(Convert.ToString(reader["Title"]));
+                    }
+                }
+            }
+            return list;
+        }
     }
 }

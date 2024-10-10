@@ -1,28 +1,17 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Entity;
 using System.Data.SQLite;
-using System.Globalization;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
-using static MaterialDesignThemes.Wpf.Theme;
-using ComboBox = System.Windows.Controls.ComboBox;
+using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml;
+using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
+using TableRow = DocumentFormat.OpenXml.Wordprocessing.TableRow;
+using TableCell = DocumentFormat.OpenXml.Wordprocessing.TableCell;
+using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
+using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
 
 
 namespace WasteMyTime.WasteCalcs
@@ -142,7 +131,6 @@ namespace WasteMyTime.WasteCalcs
 
         private void LoadData()
         {
-            Console.WriteLine(WasteItemID);
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
@@ -253,6 +241,57 @@ namespace WasteMyTime.WasteCalcs
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private void PrintCalc_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> Header = SQLquery.GetWasteForPrint(WasteItemID);
+            double sum = 0;
+            foreach (var item in Weldings) 
+            {
+                sum += item.SlagMass;
+            }
+
+            Table table = new Table();
+
+            TableProperties tableProperties = new TableProperties(new TableBorders(new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                                                                                 new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                                                                                 new LeftBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                                                                                 new RightBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                                                                                 new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+                                                                                 new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 }));
+            table.AppendChild(tableProperties);
+
+            TableCell Cell1 = new TableCell(new Paragraph(new Run(new Text("Марка электрода"))));
+            TableCell Cell2 = new TableCell(new Paragraph(new Run(new Text("Масса электродов, т"))));
+            TableCell Cell3 = new TableCell(new Paragraph(new Run(new Text("Норматив образования"))));
+            TableCell Cell4 = new TableCell(new Paragraph(new Run(new Text("Масса отхода, т"))));
+            table.Append(new TableRow(Cell1, Cell2, Cell3, Cell4));
+
+
+
+            foreach (var welding in Weldings)
+            {
+                TableRow row = new TableRow();
+                TableCell ElectrodeBrandCell = new TableCell(new Paragraph(new Run(new Text(welding.ElectrodeBrand))));
+                TableCell ElectrodeMassCell = new TableCell(new Paragraph(new Run(new Text(welding.ElectrodeMass))));
+                TableCell NormativeCell = new TableCell(new Paragraph(new Run(new Text(welding.Normative.ToString()))));
+                TableCell SlagMassCell = new TableCell(new Paragraph(new Run(new Text(welding.SlagMass.ToString()))));
+                row.Append(ElectrodeBrandCell);
+                row.Append(ElectrodeMassCell);
+                row.Append(NormativeCell);
+                row.Append(SlagMassCell);
+                table.Append(row);
+            }
+
+
+            List<dynamic> listD = new List<dynamic>();
+            listD.Add(new Paragraph(new Run(new Text("Расчет выполнен на основании п.37 таблицы 3.6.1 Методических рекомендаций по оценке объемов образования отходов производства и потребления, Москва 2003г."))));
+            listD.Add(table);
+            listD.Add(new Paragraph(new Run(new Text($"Норматив образования отхода: {sum.ToString()} тонн"))));
+
+            Printout report = new Printout(Header[0] + " " + Header[1], listD);
+            report.SaveReport();
         }
     }
 }
